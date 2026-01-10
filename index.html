@@ -88,12 +88,16 @@
     .graphs-container {
       display: grid;
       grid-template-columns: 1fr;
-      gap: 1rem;
+      gap: 1.5rem;
+    }
+
+    .graph-item {
+      position: relative;
     }
 
     canvas.graph-canvas {
       width: 100%;
-      height: 140px;
+      height: 160px;
       background: rgba(0, 0, 0, 0.2);
       border-radius: 8px;
     }
@@ -244,15 +248,8 @@
       const lastTimeRef = useRef();
 
       // -- Physics Calculations --
-      // ω = sqrt(k/m)
-      // x(t) = A cos(ωt + φ)
-      // v(t) = -Aω sin(ωt + φ)
-      // a(t) = -Aω² cos(ωt + φ) = -ω²x(t)
-
       const physics = useMemo(() => {
         const omega = Math.sqrt(params.k / params.m);
-        // A cos(phi) = x0
-        // -A*omega*sin(phi) = v0 -> A sin(phi) = -v0/omega
         const A = Math.sqrt(params.x0 ** 2 + (params.v0 / omega) ** 2);
         const phi = Math.atan2(-params.v0 / omega, params.x0);
         return { omega, A, phi };
@@ -297,13 +294,18 @@
         const canvas = oscCanvasRef.current;
         if (!canvas) return;
         const ctx = canvas.getContext('2d');
-        const w = canvas.width = canvas.offsetWidth;
-        const h = canvas.height = canvas.offsetHeight;
+        const dpr = window.devicePixelRatio || 1;
+        const rect = canvas.getBoundingClientRect();
+        canvas.width = rect.width * dpr;
+        canvas.height = rect.height * dpr;
+        ctx.scale(dpr, dpr);
+        const w = rect.width;
+        const h = rect.height;
 
         const centerY = h / 2;
         const wallX = 60;
-        const eqX = w / 2 + 50; // Equilibrium X
-        const scale = 35; // px / m
+        const eqX = w / 2 + 50;
+        const scale = 35;
         const massX = eqX + currentState.x * scale;
         const mSize = 44;
 
@@ -343,7 +345,6 @@
         ctx.fillRect(massX - mSize / 2, centerY - mSize / 2, mSize, mSize);
         ctx.shadowBlur = 0;
 
-        // Value Label
         ctx.fillStyle = '#fff';
         ctx.font = 'bold 12px Inter';
         ctx.textAlign = 'center';
@@ -354,60 +355,112 @@
         const canvas = canvasRef.current;
         if (!canvas) return;
         const ctx = canvas.getContext('2d');
-        const w = canvas.width = canvas.offsetWidth;
-        const h = canvas.height = canvas.offsetHeight;
+        const dpr = window.devicePixelRatio || 1;
+        const rect = canvas.getBoundingClientRect();
+        canvas.width = rect.width * dpr;
+        canvas.height = rect.height * dpr;
+        ctx.scale(dpr, dpr);
+        const w = rect.width;
+        const h = rect.height;
 
-        const midY = h / 2;
+        const padding = { left: 50, right: 20, top: 20, bottom: 30 };
+        const graphW = w - padding.left - padding.right;
+        const graphH = h - padding.top - padding.bottom;
+        const midY = padding.top + graphH / 2;
+
         const timeScale = 40; // px / sec
+        const timeWindow = graphW / timeScale;
+        const startTime = Math.max(0, time - timeWindow * 0.8);
 
-        // Calculate dynamic scale based on theoretical max for this specific movement
         let theoreticalMax;
         if (type === 'x') theoreticalMax = physics.A;
         else if (type === 'v') theoreticalMax = physics.A * physics.omega;
         else if (type === 'a') theoreticalMax = physics.A * (physics.omega ** 2);
 
-        // Ensure we have a minimum "zoom" even for small oscillations
         const safeMax = Math.max(theoreticalMax, 0.1);
-        // valScale converts meters (or m/s, m/s2) to pixels. 
-        // We want safeMax * valScale = midY * 0.8 (to leave 20% top/bottom padding)
-        const valScale = (midY * 0.8) / safeMax;
+        const valScale = (graphH / 2 * 0.8) / safeMax;
 
         ctx.clearRect(0, 0, w, h);
 
-        // Axis
-        ctx.strokeStyle = 'rgba(255,255,255,0.1)';
-        ctx.beginPath(); ctx.moveTo(0, midY); ctx.lineTo(w, midY); ctx.stroke();
+        // Grid & Background
+        ctx.strokeStyle = 'rgba(255,255,255,0.03)';
+        ctx.lineWidth = 1;
+        for (let i = 0; i <= 4; i++) {
+          const y = padding.top + (graphH * i / 4);
+          ctx.beginPath(); ctx.moveTo(padding.left, y); ctx.lineTo(w - padding.right, y); ctx.stroke();
+        }
+
+        // Axes
+        ctx.strokeStyle = 'rgba(255,255,255,0.2)';
+        ctx.lineWidth = 1;
+        // X-axis (Time)
+        ctx.beginPath(); ctx.moveTo(padding.left, midY); ctx.lineTo(w - padding.right, midY); ctx.stroke();
+        // Y-axis (Value)
+        ctx.beginPath(); ctx.moveTo(padding.left, padding.top); ctx.lineTo(padding.left, h - padding.bottom); ctx.stroke();
+
+        // Labels
+        ctx.fillStyle = 'rgba(255,255,255,0.5)';
+        ctx.font = '10px Inter';
+        ctx.textAlign = 'right';
+        ctx.textBaseline = 'middle';
+
+        // Y-Axis Ticks
+        const unit = type === 'x' ? 'm' : (type === 'v' ? 'm/s' : 'm/s²');
+        ctx.fillText(`${safeMax.toFixed(1)}`, padding.left - 8, midY - safeMax * valScale);
+        ctx.fillText(`0`, padding.left - 8, midY);
+        ctx.fillText(`-${safeMax.toFixed(1)}`, padding.left - 8, midY + safeMax * valScale);
+
+        // Axis Title
+        ctx.save();
+        ctx.translate(15, midY);
+        ctx.rotate(-Math.PI / 2);
+        ctx.textAlign = 'center';
+        ctx.fillText(`${type.toUpperCase()} (${unit})`, 0, 0);
+        ctx.restore();
+
+        // X-Axis Ticks (Time)
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'top';
+        for (let tLine = Math.ceil(startTime); tLine <= startTime + timeWindow; tLine++) {
+          const xPos = padding.left + (tLine - startTime) * timeScale;
+          if (xPos >= padding.left && xPos <= w - padding.right) {
+            ctx.fillText(`${tLine}s`, xPos, h - padding.bottom + 5);
+          }
+        }
 
         // Plot
+        ctx.save();
+        ctx.beginPath();
+        ctx.rect(padding.left, padding.top, graphW, graphH);
+        ctx.clip();
+
         ctx.strokeStyle = color;
         ctx.lineWidth = 2;
         ctx.beginPath();
 
-        const timeWindow = w / timeScale;
-        const startTime = Math.max(0, time - timeWindow * 0.8);
-
-        for (let px = 0; px < w; px++) {
+        for (let px = 0; px <= graphW; px++) {
           const t = startTime + (px / timeScale);
           const state = getStates(t);
           const val = state[type];
           const py = midY - val * valScale;
-          if (px === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+          const xPos = padding.left + px;
+          if (px === 0) ctx.moveTo(xPos, py); else ctx.lineTo(xPos, py);
         }
         ctx.stroke();
 
-        // Current Value Tag (Floating text)
-        ctx.fillStyle = color;
-        ctx.font = '10px monospace';
-        ctx.textAlign = 'right';
-        const unit = type === 'x' ? 'm' : (type === 'v' ? 'm/s' : 'm/s²');
-        ctx.fillText(`${currentState[type].toFixed(2)}${unit}`, w - 10, 20);
-
-        // Current Time Cursor
-        const cursorX = (time - startTime) * timeScale;
-        if (cursorX >= 0 && cursorX <= w) {
+        // Cursor
+        const cursorX = padding.left + (time - startTime) * timeScale;
+        if (cursorX >= padding.left && cursorX <= w - padding.right) {
           ctx.fillStyle = '#fff';
           ctx.beginPath(); ctx.arc(cursorX, midY - currentState[type] * valScale, 4, 0, Math.PI * 2); ctx.fill();
         }
+        ctx.restore();
+
+        // Current Value
+        ctx.fillStyle = color;
+        ctx.font = 'bold 11px monospace';
+        ctx.textAlign = 'right';
+        ctx.fillText(`${currentState[type].toFixed(2)} ${unit}`, w - padding.right, padding.top - 5);
       };
 
       useEffect(() => {
@@ -419,7 +472,6 @@
 
       const updateParam = (key, val) => {
         setParams(prev => ({ ...prev, [key]: val }));
-        // Reset time when changing initial conditions to see proper start
         if (key === 'x0' || key === 'v0') {
           setTime(0);
           setPaused(true);
@@ -433,27 +485,25 @@
           </header>
 
           <div className="main-layout">
-            {/* Simulation & Graphs */}
             <div className="sim-view card">
               <canvas ref={oscCanvasRef} className="oscillator-canvas"></canvas>
 
               <div className="graphs-container">
-                <div>
+                <div className="graph-item">
                   <div className="graph-label"><div className="dot" style={{ background: '#3b82f6' }}></div> Position (x)</div>
                   <canvas ref={xGraphRef} className="graph-canvas"></canvas>
                 </div>
-                <div>
+                <div className="graph-item">
                   <div className="graph-label"><div className="dot" style={{ background: '#10b981' }}></div> Velocity (v)</div>
                   <canvas ref={vGraphRef} className="graph-canvas"></canvas>
                 </div>
-                <div>
+                <div className="graph-item">
                   <div className="graph-label"><div className="dot" style={{ background: '#a855f7' }}></div> Acceleration (a)</div>
                   <canvas ref={aGraphRef} className="graph-canvas"></canvas>
                 </div>
               </div>
             </div>
 
-            {/* Controls */}
             <aside className="control-section">
               <div className="card">
                 <h3 style={{ margin: '0 0 1.5rem 0', fontSize: '1rem' }}>매개변수 설정</h3>
