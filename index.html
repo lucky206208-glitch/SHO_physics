@@ -4,13 +4,25 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SHM Master - 위치/속도/가속도 시뮬레이션</title>
+  <meta name="description"
+    content="단조화 진동(Simple Harmonic Motion)의 원리를 이해하고 직접 실험해보세요. 위치, 속도, 가속도의 관계를 실시간 그래프로 확인할 수 있는 대화형 물리 시뮬레이션입니다.">
+  <meta name="keywords" content="물리학, 단조화 운동, 시뮬레이션, SHM, 용수철 진자, 등속 원운동, 물리 실험, 교육용 자료">
+  <meta property="og:title" content="SHM Master - 단조화 진동 시뮬레이션">
+  <meta property="og:description" content="위치, 속도, 가속도 그래프와 함께하는 인터랙티브 물리 학습 도구">
+  <meta property="og:type" content="website">
+
+  <title>SHM Master - 단조화 진동(SHM) 시뮬레이터 및 물리 학습</title>
+
+  <!-- Google AdSense -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2754252374614527"
     crossorigin="anonymous"></script>
   <meta name="google-adsense-account" content="ca-pub-2754252374614527">
+
+  <!-- React Dependencies -->
   <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
@@ -33,31 +45,62 @@
       color: var(--text-primary);
       margin: 0;
       padding: 0;
+      line-height: 1.6;
     }
 
     .app-container {
       max-width: 1200px;
       margin: 0 auto;
-      padding: 2rem;
+      padding: 0 2rem;
     }
 
-    .header {
+    /* Header Navigation */
+    .site-header {
+      padding: 1.5rem 0;
+      border-bottom: 1px solid var(--bg-tertiary);
       margin-bottom: 2rem;
-      text-align: left;
     }
 
-    .header h1 {
-      margin: 0;
-      font-size: 1.8rem;
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 800;
       background: linear-gradient(to right, #3b82f6, #a855f7);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
+      text-decoration: none;
     }
 
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+    }
+
+    .nav-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--text-primary);
+    }
+
+    /* Main Grid Layout */
     .main-layout {
       display: grid;
       grid-template-columns: 1fr 340px;
       gap: 2rem;
+      margin-bottom: 4rem;
     }
 
     @media (max-width: 1000px) {
@@ -74,6 +117,7 @@
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
     }
 
+    /* Simulation Styles */
     .sim-view {
       display: flex;
       flex-direction: column;
@@ -87,15 +131,10 @@
       border-radius: 12px;
     }
 
-    /* Graphs Grid */
     .graphs-container {
       display: grid;
       grid-template-columns: 1fr;
       gap: 1.5rem;
-    }
-
-    .graph-item {
-      position: relative;
     }
 
     canvas.graph-canvas {
@@ -132,6 +171,11 @@
       display: flex;
       flex-direction: column;
       gap: 0.5rem;
+      margin-top: 10px;
+    }
+
+    .control-item:first-child {
+      margin-top: 0;
     }
 
     .label-row {
@@ -228,7 +272,7 @@
       margin-top: 0.2rem;
     }
 
-    /* Contact Form Styles */
+    /* Contact Form */
     .contact-card {
       margin-top: 1.5rem;
       border: 1px solid rgba(59, 130, 246, 0.3);
@@ -247,9 +291,10 @@
       border-radius: 8px;
       padding: 0.75rem;
       color: #fff;
-      font-family: inherit;
       outline: none;
       transition: border-color 0.2s;
+      width: 100%;
+      box-sizing: border-box;
     }
 
     .form-input:focus,
@@ -270,18 +315,188 @@
       font-weight: 600;
       border: none;
       cursor: pointer;
-      transition: opacity 0.2s;
     }
 
-    .btn-submit:hover {
-      opacity: 0.9;
+    /* Content Sections for SEO */
+    .content-section {
+      max-width: 800px;
+      margin: 4rem auto;
+      padding-bottom: 4rem;
+    }
+
+    .article-card {
+      background: var(--bg-secondary);
+      border-radius: 16px;
+      padding: 2.5rem;
+      margin-bottom: 2rem;
+      border: 1px solid var(--bg-tertiary);
+    }
+
+    .article-title {
+      font-size: 1.8rem;
+      margin-bottom: 1.5rem;
+      color: var(--text-primary);
+    }
+
+    .article-text {
+      color: var(--text-secondary);
+      line-height: 1.8;
+      margin-bottom: 1.5rem;
+    }
+
+    .article-text strong {
+      color: var(--text-primary);
+    }
+
+    .math-block {
+      background: var(--bg-tertiary);
+      padding: 1.5rem;
+      border-radius: 8px;
+      margin: 1.5rem 0;
+      font-family: 'Times New Roman', serif;
+      font-style: italic;
+      text-align: center;
+      font-size: 1.2rem;
+      color: #fff;
+    }
+
+    /* Footer */
+    .site-footer {
+      background: var(--bg-secondary);
+      border-top: 1px solid var(--bg-tertiary);
+      padding: 3rem 0;
+      margin-top: auto;
+    }
+
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 2rem;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .footer-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+
+    .footer-links a:hover {
+      text-decoration: underline;
+    }
+
+    .copyright {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
     }
   </style>
 </head>
 
 <body>
-  <div id="root"></div>
 
+  <header class="site-header">
+    <div class="nav-container">
+      <a href="/" class="logo">SHM Master</a>
+      <nav class="nav-links">
+        <a href="#simulation">시뮬레이션</a>
+        <a href="#theory">이론 및 원리</a>
+        <a href="#guide">사용 가이드</a>
+      </nav>
+    </div>
+  </header>
+
+  <div id="simulation" class="app-container">
+    <div class="header">
+      <h1>SHM(단조화 진동) 인터랙티브 물리 실험실</h1>
+      <p style="color: var(--text-secondary); margin-top: 0.5rem;">
+        스프링 상수, 질량, 초기 조건을 조절하여 물체의 운동을 실시간으로 관찰하세요.
+      </p>
+    </div>
+    <div id="root"></div>
+  </div>
+
+  <section id="theory" class="content-section app-container">
+    <div class="article-card">
+      <h2 class="article-title">단조화 진동(Simple Harmonic Motion)이란?</h2>
+      <p class="article-text">
+        단조화 진동(SHM)은 물리학에서 가장 기본적이고 중요한 주기 운동 중 하나입니다.
+        복원력이 변위(변형된 길이)에 비례하고 방향은 반대인 경우, 물체는 사인(sine) 또는 코사인(cosine) 파형을 그리며 진동하게 됩니다.
+        이 시뮬레이터는 훅의 법칙(Hooke's Law)을 따르는 이상적인 용수철-질량 시스템을 보여줍니다.
+      </p>
+
+      <div class="math-block">
+        F = -kx
+      </div>
+
+      <p class="article-text">
+        여기서 <strong>F</strong>는 복원력, <strong>k</strong>는 용수철 상수(탄성 계수), <strong>x</strong>는 평형 위치로부터의 변위입니다.
+        이 힘은 뉴턴의 제2법칙(F=ma)에 따라 물체를 가속시키며, 그 결과 물체의 위치는 시간에 따라 다음과 같이 변합니다.
+      </p>
+
+      <div class="math-block">
+        x(t) = A cos(ωt + φ)
+      </div>
+
+      <p class="article-text">
+        <strong>A</strong>는 진폭(최대 변위), <strong>ω</strong>(오메가)는 각진동수, <strong>φ</strong>(파이)는 초기 위상을 의미합니다.
+        각진동수 ω는 시스템의 고유한 성질인 질량(m)과 용수철 상수(k)에 의해 결정됩니다: <br>
+        <strong>ω = √(k/m)</strong>
+      </p>
+    </div>
+
+    <div class="article-card">
+      <h2 class="article-title">에너지 보존의 법칙</h2>
+      <p class="article-text">
+        마찰이나 공기 저항이 없는 이상적인 SHM 시스템에서 역학적 에너지는 항상 보존됩니다.
+        물체가 운동하는 동안 탄성 위치 에너지와 운동 에너지는 서로 전환되지만, 그 합은 일정합니다.
+      </p>
+      <ul>
+        <li class="article-text"><strong>위치 에너지 (U):</strong> ½kx² (용수철이 최대로 늘어나거나 줄어들었을 때 최대)</li>
+        <li class="article-text"><strong>운동 에너지 (K):</strong> ½mv² (평형점을 지날 때 속도가 가장 빠르므로 최대)</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="guide" class="content-section app-container" style="margin-top: -2rem;">
+    <div class="article-card">
+      <h2 class="article-title">시뮬레이터 사용 가이드</h2>
+      <p class="article-text">
+        우측의 컨트롤 패널을 사용하여 실험 조건을 실시간으로 변경할 수 있습니다.
+      </p>
+      <ol style="color: var(--text-secondary); padding-left: 1.5rem; line-height: 1.8;">
+        <li><strong>초기 위치 (Initial Position):</strong> 물체를 잡아당기거나 미는 윛를 설정합니다. 이는 초기 에너지를 결정합니다.</li>
+        <li><strong>초기 속도 (Initial Velocity):</strong> 실험 시작 시 물체에 가해지는 속도입니다.</li>
+        <li><strong>질량 (Mass):</strong> 물체의 무거운 정도입니다. 질량이 클수록 주기가 길어집니다(느리게 진동).</li>
+        <li><strong>용수철 상수 (Spring Constant):</strong> 용수철의 탄성입니다. 값이 클수록 용수철이 뻣뻣하며 주기가 짧아집니다(빠르게 진동).</li>
+      </ol>
+      <p class="article-text" style="margin-top: 1rem;">
+        그래프에서는 위치(파란색), 속도(초록색), 가속도(보라색)의 변화를 시간에 따라 한눈에 비교할 수 있습니다.
+      </p>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="footer-content">
+      <div class="copyright">
+        &copy; 2024 SHM Master. All rights reserved.
+      </div>
+      <div class="footer-links">
+        <a href="/privacy.html">개인정보처리방침</a>
+        <a href="/terms.html">이용약관</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- React Logic -->
   <script type="text/babel">
     const { useState, useEffect, useRef, useMemo } = React;
 
@@ -363,7 +578,7 @@
 
         ctx.clearRect(0, 0, w, h);
 
-        // Floor
+        // Floor (Simpler look)
         ctx.strokeStyle = '#262626';
         ctx.beginPath(); ctx.moveTo(0, centerY + mSize / 2); ctx.lineTo(w, centerY + mSize / 2); ctx.stroke();
 
@@ -434,7 +649,7 @@
 
         ctx.clearRect(0, 0, w, h);
 
-        // Grid & Background
+        // Grid lines
         ctx.strokeStyle = 'rgba(255,255,255,0.03)';
         ctx.lineWidth = 1;
         for (let i = 0; i <= 4; i++) {
@@ -445,10 +660,8 @@
         // Axes
         ctx.strokeStyle = 'rgba(255,255,255,0.2)';
         ctx.lineWidth = 1;
-        // X-axis (Time)
-        ctx.beginPath(); ctx.moveTo(padding.left, midY); ctx.lineTo(w - padding.right, midY); ctx.stroke();
-        // Y-axis (Value)
-        ctx.beginPath(); ctx.moveTo(padding.left, padding.top); ctx.lineTo(padding.left, h - padding.bottom); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(padding.left, midY); ctx.lineTo(w - padding.right, midY); ctx.stroke(); // X
+        ctx.beginPath(); ctx.moveTo(padding.left, padding.top); ctx.lineTo(padding.left, h - padding.bottom); ctx.stroke(); // Y
 
         // Labels
         ctx.fillStyle = 'rgba(255,255,255,0.5)';
@@ -470,7 +683,7 @@
         ctx.fillText(`${type.toUpperCase()} (${unit})`, 0, 0);
         ctx.restore();
 
-        // X-Axis Ticks (Time)
+        // X-Axis Ticks
         ctx.textAlign = 'center';
         ctx.textBaseline = 'top';
         for (let tLine = Math.ceil(startTime); tLine <= startTime + timeWindow; tLine++) {
@@ -485,11 +698,9 @@
         ctx.beginPath();
         ctx.rect(padding.left, padding.top, graphW, graphH);
         ctx.clip();
-
         ctx.strokeStyle = color;
         ctx.lineWidth = 2;
         ctx.beginPath();
-
         for (let px = 0; px <= graphW; px++) {
           const t = startTime + (px / timeScale);
           const state = getStates(t);
@@ -531,97 +742,91 @@
       };
 
       return (
-        <div className="app-container">
-          <header className="header">
-            <h1>SHM Master: Interactive Physics</h1>
-          </header>
+        <div className="main-layout" style={{ maxWidth: 'unset', display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) 340px' }}>
+          <div className="sim-view card">
+            <canvas ref={oscCanvasRef} className="oscillator-canvas"></canvas>
 
-          <div className="main-layout">
-            <div className="sim-view card">
-              <canvas ref={oscCanvasRef} className="oscillator-canvas"></canvas>
+            <div className="graphs-container">
+              <div className="graph-item">
+                <div className="graph-label"><div className="dot" style={{ background: '#3b82f6' }}></div> Position (x)</div>
+                <canvas ref={xGraphRef} className="graph-canvas"></canvas>
+              </div>
+              <div className="graph-item">
+                <div className="graph-label"><div className="dot" style={{ background: '#10b981' }}></div> Velocity (v)</div>
+                <canvas ref={vGraphRef} className="graph-canvas"></canvas>
+              </div>
+              <div className="graph-item">
+                <div className="graph-label"><div className="dot" style={{ background: '#a855f7' }}></div> Acceleration (a)</div>
+                <canvas ref={aGraphRef} className="graph-canvas"></canvas>
+              </div>
+            </div>
+          </div>
 
-              <div className="graphs-container">
-                <div className="graph-item">
-                  <div className="graph-label"><div className="dot" style={{ background: '#3b82f6' }}></div> Position (x)</div>
-                  <canvas ref={xGraphRef} className="graph-canvas"></canvas>
-                </div>
-                <div className="graph-item">
-                  <div className="graph-label"><div className="dot" style={{ background: '#10b981' }}></div> Velocity (v)</div>
-                  <canvas ref={vGraphRef} className="graph-canvas"></canvas>
-                </div>
-                <div className="graph-item">
-                  <div className="graph-label"><div className="dot" style={{ background: '#a855f7' }}></div> Acceleration (a)</div>
-                  <canvas ref={aGraphRef} className="graph-canvas"></canvas>
-                </div>
+          <aside className="control-section">
+            <div className="card">
+              <h3 style={{ margin: '0 0 1.5rem 0', fontSize: '1rem' }}>매개변수 설정</h3>
+
+              <div className="control-item">
+                <div className="label-row"><span>초기 위치 (x₀)</span> <span className="val-text">{params.x0.toFixed(1)} m</span></div>
+                <input type="range" min="-4" max="4" step="0.1" value={params.x0} onChange={e => updateParam('x0', parseFloat(e.target.value))} />
+              </div>
+
+              <div className="control-item">
+                <div className="label-row"><span>초기 속도 (v₀)</span> <span className="val-text">{params.v0.toFixed(1)} m/s</span></div>
+                <input type="range" min="-10" max="10" step="0.5" value={params.v0} onChange={e => updateParam('v0', parseFloat(e.target.value))} />
+              </div>
+
+              <div className="control-item">
+                <div className="label-row"><span>질량 (m)</span> <span className="val-text">{params.m.toFixed(1)} kg</span></div>
+                <input type="range" min="0.5" max="5" step="0.1" value={params.m} onChange={e => updateParam('m', parseFloat(e.target.value))} />
+              </div>
+
+              <div className="control-item">
+                <div className="label-row"><span>스프링 상수 (k)</span> <span className="val-text">{params.k} N/m</span></div>
+                <input type="range" min="1" max="50" step="1" value={params.k} onChange={e => updateParam('k', parseFloat(e.target.value))} />
+              </div>
+
+              <div className="button-group">
+                <button className={`btn ${paused ? 'btn-play' : 'btn-pause'}`} onClick={() => setPaused(!paused)}>
+                  {paused ? "시작" : "일시정지"}
+                </button>
+                <button className="btn btn-reset" onClick={() => { setTime(0); setPaused(true); }}>초기화</button>
               </div>
             </div>
 
-            <aside className="control-section">
-              <div className="card">
-                <h3 style={{ margin: '0 0 1.5rem 0', fontSize: '1rem' }}>매개변수 설정</h3>
-
-                <div className="control-item">
-                  <div className="label-row"><span>초기 위치 (x₀)</span> <span className="val-text">{params.x0.toFixed(1)} m</span></div>
-                  <input type="range" min="-4" max="4" step="0.1" value={params.x0} onChange={e => updateParam('x0', parseFloat(e.target.value))} />
-                </div>
-
-                <div className="control-item" style={{ marginTop: '10px' }}>
-                  <div className="label-row"><span>초기 속도 (v₀)</span> <span className="val-text">{params.v0.toFixed(1)} m/s</span></div>
-                  <input type="range" min="-10" max="10" step="0.5" value={params.v0} onChange={e => updateParam('v0', parseFloat(e.target.value))} />
-                </div>
-
-                <div className="control-item" style={{ marginTop: '10px' }}>
-                  <div className="label-row"><span>질량 (m)</span> <span className="val-text">{params.m.toFixed(1)} kg</span></div>
-                  <input type="range" min="0.5" max="5" step="0.1" value={params.m} onChange={e => updateParam('m', parseFloat(e.target.value))} />
-                </div>
-
-                <div className="control-item" style={{ marginTop: '10px' }}>
-                  <div className="label-row"><span>스프링 상수 (k)</span> <span className="val-text">{params.k} N/m</span></div>
-                  <input type="range" min="1" max="50" step="1" value={params.k} onChange={e => updateParam('k', parseFloat(e.target.value))} />
-                </div>
-
-                <div className="button-group">
-                  <button className={`btn ${paused ? 'btn-play' : 'btn-pause'}`} onClick={() => setPaused(!paused)}>
-                    {paused ? "시작" : "일시정지"}
-                  </button>
-                  <button className="btn btn-reset" onClick={() => { setTime(0); setPaused(true); }}>초기화</button>
-                </div>
+            <div className="dashboard">
+              <div className="dash-card">
+                <div className="dash-val">{(2 * Math.PI / physics.omega).toFixed(2)}s</div>
+                <div className="dash-lbl">Period (T)</div>
               </div>
-
-              <div className="dashboard">
-                <div className="dash-card">
-                  <div className="dash-val">{(2 * Math.PI / physics.omega).toFixed(2)}s</div>
-                  <div className="dash-lbl">Period (T)</div>
-                </div>
-                <div className="dash-card">
-                  <div className="dash-val">{physics.omega.toFixed(2)}</div>
-                  <div className="dash-lbl">Freq (ω)</div>
-                </div>
-                <div className="dash-card">
-                  <div className="dash-val">{(0.5 * params.k * currentState.x ** 2 + 0.5 * params.m * currentState.v ** 2).toFixed(1)}J</div>
-                  <div className="dash-lbl">Energy (E)</div>
-                </div>
-                <div className="dash-card">
-                  <div className="dash-val">{physics.A.toFixed(2)}m</div>
-                  <div className="dash-lbl">Amplitude (A)</div>
-                </div>
+              <div className="dash-card">
+                <div className="dash-val">{physics.omega.toFixed(2)}</div>
+                <div className="dash-lbl">Freq (ω)</div>
               </div>
-
-              {/* 제휴 문의 폼 */}
-              <div className="card contact-card">
-                <h3 style={{ margin: '0 0 1rem 0', fontSize: '1rem', color: 'var(--accent-blue)' }}>🤝 제휴 문의</h3>
-                <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', marginBottom: '1rem' }}>
-                  시뮬레이션 도입 및 협업 문의는 아래 폼을 통해 남겨주세요.
-                </p>
-                <form action="https://formspree.io/f/xvzzpqdq" method="POST" className="contact-form">
-                  <input type="text" name="name" className="form-input" placeholder="성함/기업명" required />
-                  <input type="email" name="email" className="form-input" placeholder="이메일 주소" required />
-                  <textarea name="message" className="form-textarea" placeholder="문의 내용을 입력해 주세요." required></textarea>
-                  <button type="submit" className="btn-submit">문의 보내기</button>
-                </form>
+              <div className="dash-card">
+                <div className="dash-val">{(0.5 * params.k * currentState.x ** 2 + 0.5 * params.m * currentState.v ** 2).toFixed(1)}J</div>
+                <div className="dash-lbl">Energy (E)</div>
               </div>
-            </aside>
-          </div>
+              <div className="dash-card">
+                <div className="dash-val">{physics.A.toFixed(2)}m</div>
+                <div className="dash-lbl">Amplitude (A)</div>
+              </div>
+            </div>
+
+            {/* 제휴 문의 폼 */}
+            <div className="card contact-card">
+              <h3 style={{ margin: '0 0 1rem 0', fontSize: '1rem', color: 'var(--accent-blue)' }}>🤝 제휴 문의</h3>
+              <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', marginBottom: '1rem' }}>
+                시뮬레이션 도입 및 협업 문의는 아래 폼을 통해 남겨주세요.
+              </p>
+              <form action="https://formspree.io/f/xvzzpqdq" method="POST" className="contact-form">
+                <input type="text" name="name" className="form-input" placeholder="성함/기업명" required />
+                <input type="email" name="email" className="form-input" placeholder="이메일 주소" required />
+                <textarea name="message" className="form-textarea" placeholder="문의 내용을 입력해 주세요." required></textarea>
+                <button type="submit" className="btn-submit">문의 보내기</button>
+              </form>
+            </div>
+          </aside>
         </div>
       );
     };
