@@ -426,61 +426,144 @@
 
   <section id="theory" class="content-section app-container">
     <div class="article-card">
-      <h2 class="article-title">단조화 진동(Simple Harmonic Motion)이란?</h2>
+      <h2 class="article-title">단조화 진동(SHM)의 물리학적 원리</h2>
       <p class="article-text">
-        단조화 진동(SHM)은 물리학에서 가장 기본적이고 중요한 주기 운동 중 하나입니다.
-        복원력이 변위(변형된 길이)에 비례하고 방향은 반대인 경우, 물체는 사인(sine) 또는 코사인(cosine) 파형을 그리며 진동하게 됩니다.
-        이 시뮬레이터는 훅의 법칙(Hooke's Law)을 따르는 이상적인 용수철-질량 시스템을 보여줍니다.
+        단조화 진동(Simple Harmonic Motion, SHM)은 물리학에서 가장 기본적이면서도 중요한 운동 형태입니다.
+        복원력이 변위에 비례하고 방향이 반대인 경우($F \propto -x$), 물체는 평형점을 중심으로 주기적인 왕복 운동을 하게 됩니다.
+        이 시뮬레이터는 훅의 법칙(Hooke's Law)을 따르는 이상적인 1차원 용수철-질량 진동자를 모델링합니다.
+      </p>
+
+      <h3>1. 운동 방정식의 유도</h3>
+      <p class="article-text">
+        뉴턴의 제2법칙($F=ma$)과 훅의 법칙($F=-kx$)을 결합하면 다음과 같은 2계 미분방정식을 얻을 수 있습니다.
       </p>
 
       <div class="math-block">
-        F = -kx
+        m \frac{d^2x}{dt^2} = -kx \quad \Rightarrow \quad \frac{d^2x}{dt^2} + \frac{k}{m}x = 0
       </div>
 
       <p class="article-text">
-        여기서 <strong>F</strong>는 복원력, <strong>k</strong>는 용수철 상수(탄성 계수), <strong>x</strong>는 평형 위치로부터의 변위입니다.
-        이 힘은 뉴턴의 제2법칙(F=ma)에 따라 물체를 가속시키며, 그 결과 물체의 위치는 시간에 따라 다음과 같이 변합니다.
+        이 미분방정식의 일반해는 사인(sine) 또는 코사인(cosine) 함수 꼴로 나타납니다.
+        여기서 각진동수 $\omega$ (omega)를 도입하면 수식이 간결해집니다.
       </p>
 
       <div class="math-block">
-        x(t) = A cos(ωt + φ)
+        \omega = \sqrt{\frac{k}{m}} \quad (\text{rad/s})
       </div>
 
+      <h3>2. 시간 함수로서의 위치, 속도, 가속도</h3>
       <p class="article-text">
-        <strong>A</strong>는 진폭(최대 변위), <strong>ω</strong>(오메가)는 각진동수, <strong>φ</strong>(파이)는 초기 위상을 의미합니다.
-        각진동수 ω는 시스템의 고유한 성질인 질량(m)과 용수철 상수(k)에 의해 결정됩니다: <br>
-        <strong>ω = √(k/m)</strong>
+        위 운동 방정식의 해를 통해 우리는 시간 $t$에 따른 물체의 상태를 정확히 예측할 수 있습니다.
+        시뮬레이터는 아래 수식을 실시간으로 계산하여 그래프로 표현합니다.
+      </p>
+      <ul>
+        <li class="article-text">
+          <strong>위치 $x(t)$</strong>: $A \cos(\omega t + \phi)$ <br>
+          <small>변위가 최대일 때 속도는 0이 됩니다.</small>
+        </li>
+        <li class="article-text">
+          <strong>속도 $v(t)$</strong>: $-\omega A \sin(\omega t + \phi)$ <br>
+          <small>평형점($x=0$)을 지날 때 속력이 최대가 됩니다.</small>
+        </li>
+        <li class="article-text">
+          <strong>가속도 $a(t)$</strong>: $-\omega^2 A \cos(\omega t + \phi)$ <br>
+          <small>가속도는 항상 변위와 반대 방향(복원력의 방향)으로 작용합니다.</small>
+        </li>
+      </ul>
+      <p class="article-text">
+        여기서 $A$는 진폭(Amplitude), $\phi$는 초기 위상각(Phase Constant)으로, 이는 초기 조건($x_0, v_0$)에 의해 결정됩니다.
       </p>
     </div>
 
     <div class="article-card">
-      <h2 class="article-title">에너지 보존의 법칙</h2>
+      <h2 class="article-title">실생활에서의 단조화 진동</h2>
       <p class="article-text">
-        마찰이나 공기 저항이 없는 이상적인 SHM 시스템에서 역학적 에너지는 항상 보존됩니다.
-        물체가 운동하는 동안 탄성 위치 에너지와 운동 에너지는 서로 전환되지만, 그 합은 일정합니다.
+        SHM은 단순한 이론적 모델을 넘어 자연계와 공학 전반에서 발견되는 보편적인 현상입니다.
+      </p>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 1.5rem;">
+        <div>
+          <h4 style="color: var(--accent-blue); margin-bottom: 0.5rem;">🎸 악기의 진동</h4>
+          <p class="article-text" style="font-size: 0.95rem;">
+            기타 줄을 튕기거나 소리굽쇠를 칠 때 발생하는 진동은 SHM의 대표적인 예입니다.
+            이 진동수가 소리의 높낮이(음정)를 결정합니다.
+          </p>
+        </div>
+        <div>
+          <h4 style="color: var(--accent-green); margin-bottom: 0.5rem;">🚗 자동차 서스펜션</h4>
+          <p class="article-text" style="font-size: 0.95rem;">
+            자동차의 쇼크 업소버와 스프링은 노면의 충격을 흡수하기 위해 감쇠 진동을 합니다.
+            기본 원리는 SHM과 동일하며, 승차감을 결정하는 중요한 요소입니다.
+          </p>
+        </div>
+        <div>
+          <h4 style="color: var(--accent-purple); margin-bottom: 0.5rem;">⚛️ 분자의 열운동</h4>
+          <p class="article-text" style="font-size: 0.95rem;">
+            고체 결정 내의 원자들은 평형 위치를 중심으로 끊임없이 미세하게 진동하고 있습니다.
+            이러한 진동 모델은 재료의 열용량 등을 설명하는 데 사용됩니다.
+          </p>
+        </div>
+        <div>
+          <h4 style="color: var(--accent-red); margin-bottom: 0.5rem;">🕰️ 시계의 진자</h4>
+          <p class="article-text" style="font-size: 0.95rem;">
+            작은 각도로 움직이는 단진자(Pendulum)는 SHM으로 근사할 수 있습니다.
+            이 등시성을 이용하여 정확한 시간을 측정하는 괘종시계가 만들어졌습니다.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-card">
+      <h2 class="article-title">에너지 보존 법칙의 시각화</h2>
+      <p class="article-text">
+        이 시뮬레이터에서는 마찰이나 공기 저항과 같은 비보존력을 고려하지 않으므로,
+        역학적 에너지(위치 에너지 + 운동 에너지)의 총합은 항상 일정하게 보존됩니다.
       </p>
       <ul>
-        <li class="article-text"><strong>위치 에너지 (U):</strong> ½kx² (용수철이 최대로 늘어나거나 줄어들었을 때 최대)</li>
-        <li class="article-text"><strong>운동 에너지 (K):</strong> ½mv² (평형점을 지날 때 속도가 가장 빠르므로 최대)</li>
+        <li class="article-text"><strong>탄성 위치 에너지 ($U_s$):</strong> 용수철이 $x$만큼 변형되었을 때 저장된 에너지입니다. ($U_s =
+          \frac{1}{2}kx^2$)</li>
+        <li class="article-text"><strong>운동 에너지 ($K$):</strong> 질량 $m$인 물체가 속도 $v$로 움직일 때 가지는 에너지입니다. ($K =
+          \frac{1}{2}mv^2$)</li>
       </ul>
+      <p class="article-text">
+        그래프를 관찰해 보세요. 위치($x$)가 최대일 때(양끝 점), 속도($v$)는 0이 되며 모든 에너지는 위치 에너지 형태로 존재합니다.
+        반대로 위치가 0일 때(평형점), 속도는 최대가 되며 모든 에너지는 운동 에너지로 전환됩니다.
+        우측 대시보드의 <strong>'Energy (E)'</strong> 값이 시간이 지나도 변하지 않는 것을 통해 이를 확인할 수 있습니다.
+      </p>
     </div>
   </section>
 
   <section id="guide" class="content-section app-container" style="margin-top: -2rem;">
     <div class="article-card">
-      <h2 class="article-title">시뮬레이터 사용 가이드</h2>
+      <h2 class="article-title">실험 가이드: 직접 확인해보세요</h2>
       <p class="article-text">
-        우측의 컨트롤 패널을 사용하여 실험 조건을 실시간으로 변경할 수 있습니다.
+        단순히 구경하는 것을 넘어, 파라미터를 조절하며 다음과 같은 물리적 현상을 직접 검증해 볼 수 있습니다.
       </p>
-      <ol style="color: var(--text-secondary); padding-left: 1.5rem; line-height: 1.8;">
-        <li><strong>초기 위치 (Initial Position):</strong> 물체를 잡아당기거나 미는 윛를 설정합니다. 이는 초기 에너지를 결정합니다.</li>
-        <li><strong>초기 속도 (Initial Velocity):</strong> 실험 시작 시 물체에 가해지는 속도입니다.</li>
-        <li><strong>질량 (Mass):</strong> 물체의 무거운 정도입니다. 질량이 클수록 주기가 길어집니다(느리게 진동).</li>
-        <li><strong>용수철 상수 (Spring Constant):</strong> 용수철의 탄성입니다. 값이 클수록 용수철이 뻣뻣하며 주기가 짧아집니다(빠르게 진동).</li>
-      </ol>
-      <p class="article-text" style="margin-top: 1rem;">
-        그래프에서는 위치(파란색), 속도(초록색), 가속도(보라색)의 변화를 시간에 따라 한눈에 비교할 수 있습니다.
-      </p>
+
+      <div
+        style="background: rgba(59, 130, 246, 0.1); border-left: 4px solid var(--accent-blue); padding: 1.5rem; border-radius: 0 8px 8px 0; margin-bottom: 2rem;">
+        <h3 style="color: var(--text-primary); margin-top: 0;">🧪 실험 1: 질량이 주기에 미치는 영향</h3>
+        <p class="article-text" style="margin-bottom: 1rem;">
+          이론상 질량($m$)이 4배가 되면 주기($T = 2\pi\sqrt{m/k}$)는 2배가 되어야 합니다.
+        </p>
+        <ol class="article-text">
+          <li>'질량(m)'을 <strong>1.0kg</strong>으로 설정하고 주기를 확인합니다.</li>
+          <li>'질량(m)'을 <strong>4.0kg</strong>으로 늘려보세요.</li>
+          <li>용수철의 움직임이 훨씬 느려진 것을 볼 수 있으며, 대시보드의 <strong>Period(T)</strong> 값이 정확히 2배가 되었는지 확인해보세요.</li>
+        </ol>
+      </div>
+
+      <div
+        style="background: rgba(16, 185, 129, 0.1); border-left: 4px solid var(--accent-green); padding: 1.5rem; border-radius: 0 8px 8px 0;">
+        <h3 style="color: var(--text-primary); margin-top: 0;">🧪 실험 2: 초기 조건과 진폭의 관계</h3>
+        <p class="article-text" style="margin-bottom: 1rem;">
+          초기 위치에서 가만히 놓는 경우($v_0=0$)와, 밀면서 시작하는 경우($v_0 \neq 0$)의 차이는 무엇일까요?
+        </p>
+        <ol class="article-text">
+          <li>'초기 위치'를 <strong>2.0m</strong>, '초기 속도'를 <strong>0</strong>으로 설정하세요. 진폭은 정확히 2.0m일 것입니다.</li>
+          <li>이제 '초기 속도'를 <strong>3.0m/s</strong>로 높여보세요.</li>
+          <li>물체가 초기 위치보다 더 멀리 튕겨 나가는 것을 볼 수 있습니다. 이는 초기 운동 에너지가 추가되었기 때문입니다.</li>
+        </ol>
+      </div>
     </div>
   </section>
 
