@@ -224,6 +224,55 @@
       text-transform: uppercase;
       margin-top: 0.2rem;
     }
+
+    /* Contact Form Styles */
+    .contact-card {
+      margin-top: 1.5rem;
+      border: 1px solid rgba(59, 130, 246, 0.3);
+    }
+
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .form-input,
+    .form-textarea {
+      background: var(--bg-tertiary);
+      border: 1px solid #404040;
+      border-radius: 8px;
+      padding: 0.75rem;
+      color: #fff;
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .form-input:focus,
+    .form-textarea:focus {
+      border-color: var(--accent-blue);
+    }
+
+    .form-textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    .btn-submit {
+      background: linear-gradient(to right, #3b82f6, #a855f7);
+      color: white;
+      padding: 0.75rem;
+      border-radius: 8px;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+
+    .btn-submit:hover {
+      opacity: 0.9;
+    }
   </style>
 </head>
 
@@ -553,6 +602,20 @@
                   <div className="dash-val">{physics.A.toFixed(2)}m</div>
                   <div className="dash-lbl">Amplitude (A)</div>
                 </div>
+              </div>
+
+              {/* 제휴 문의 폼 */}
+              <div className="card contact-card">
+                <h3 style={{ margin: '0 0 1rem 0', fontSize: '1rem', color: 'var(--accent-blue)' }}>🤝 제휴 문의</h3>
+                <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', marginBottom: '1rem' }}>
+                  시뮬레이션 도입 및 협업 문의는 아래 폼을 통해 남겨주세요.
+                </p>
+                <form action="https://formspree.io/f/xvzzpqdq" method="POST" className="contact-form">
+                  <input type="text" name="name" className="form-input" placeholder="성함/기업명" required />
+                  <input type="email" name="email" className="form-input" placeholder="이메일 주소" required />
+                  <textarea name="message" className="form-textarea" placeholder="문의 내용을 입력해 주세요." required></textarea>
+                  <button type="submit" className="btn-submit">문의 보내기</button>
+                </form>
               </div>
             </aside>
           </div>
