@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Harmonic Oscillator Simulation</title>
+    <!-- React and Tailwind-style CDN for quick look -->
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+        :root {
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #171717;
+            --bg-tertiary: #262626;
+            --text-primary: #ededed;
+            --text-secondary: #a3a3a3;
+            --accent-color: #3b82f6;
+            --accent-glow: rgba(59, 130, 246, 0.5);
+            --spring-color: #10b981;
+            --mass-color: #ef4444;
+            --grid-color: #404040;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .header h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(to right, #3b82f6, #10b981);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 0;
+        }
+
+        .grid-layout {
+            display: grid;
+            grid-template-columns: 1fr 320px;
+            gap: 1.5rem;
+        }
+
+        @media (max-width: 850px) {
+            .grid-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--bg-tertiary);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        canvas {
+            width: 100%;
+            height: 300px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+        }
+
+        .control-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .control-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-secondary);
+        }
+
+        .value-badge {
+            font-family: monospace;
+            color: var(--accent-color);
+        }
+
+        input[type="range"] {
+            width: 100%;
+            height: 4px;
+            background: var(--bg-tertiary);
+            border-radius: 2px;
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 16px;
+            height: 16px;
+            background: var(--accent-color);
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 0 10px var(--accent-glow);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 0.75rem;
+            border-radius: 8px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-top: 0.5rem;
+        }
+
+        .btn-primary {
+            background: var(--accent-color);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: var(--bg-tertiary);
+            color: white;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .stat-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--bg-tertiary);
+            border-radius: 12px;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.1rem;
+            font-weight: 700;
+            font-family: monospace;
+        }
+
+        .stat-label {
+            font-size: 0.65rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect, useRef } = React;
+
+        function App() {
+            // Physics State
+            const [params, setParams] = useState({
+                m: 1.0,  // kg
+                k: 10.0, // N/m
+                x0: 1.5, // m
+                v0: 0.0  // m/s
+            });
+
+            const [time, setTime] = useState(0);
+            const [paused, setPaused] = useState(true);
+            const requestRef = useRef();
+            const lastTimeRef = useRef();
+
+            // Derived constants
+            const omega = Math.sqrt(params.k / params.m);
+            const A = Math.sqrt(params.x0 ** 2 + (params.v0 / omega) ** 2);
+            const phi = Math.atan2(-params.v0 / omega, params.x0);
+
+            // Current State
+            const x = A * Math.cos(omega * time + phi);
+            const v = -A * omega * Math.sin(omega * time + phi);
+            const potE = 0.5 * params.k * x ** 2;
+            const kinE = 0.5 * params.m * v ** 2;
+
+            const animate = (currentTime) => {
+                if (lastTimeRef.current !== undefined) {
+                    const dt = Math.min((currentTime - lastTimeRef.current) / 1000, 0.1);
+                    setTime(prev => prev + dt);
+                }
+                lastTimeRef.current = currentTime;
+                requestRef.current = requestAnimationFrame(animate);
+            };
+
+            useEffect(() => {
+                if (!paused) {
+                    requestRef.current = requestAnimationFrame(animate);
+                } else {
+                    lastTimeRef.current = undefined;
+                    cancelAnimationFrame(requestRef.current);
+                }
+                return () => cancelAnimationFrame(requestRef.current);
+            }, [paused]);
+
+            const canvasRef = useRef();
+            useEffect(() => {
+                const canvas = canvasRef.current;
+                const ctx = canvas.getContext('2d');
+                const w = canvas.width = canvas.offsetWidth;
+                const h = canvas.height = canvas.offsetHeight;
+
+                ctx.clearRect(0, 0, w, h);
+                const centerY = h / 2;
+                const wallX = 60;
+                const centerX = w / 2 + 30; // Equilibrium position
+                const scale = 40; // px/m
+                const massX = centerX + x * scale;
+                const massSize = 40;
+
+                // Draw Floor
+                ctx.strokeStyle = '#262626';
+                ctx.beginPath();
+                ctx.moveTo(0, centerY + massSize / 2);
+                ctx.lineTo(w, centerY + massSize / 2);
+                ctx.stroke();
+
+                // Draw Equilibrium line
+                ctx.strokeStyle = 'rgba(255,255,255,0.05)';
+                ctx.setLineDash([5, 5]);
+                ctx.beginPath(); ctx.moveTo(centerX, 0); ctx.lineTo(centerX, h); ctx.stroke();
+                ctx.setLineDash([]);
+
+                // Draw Wall
+                ctx.fillStyle = '#404040';
+                ctx.fillRect(0, centerY - 60, wallX, 120);
+
+                // Draw Spring
+                ctx.strokeStyle = '#10b981';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(wallX, centerY);
+                const segments = 30;
+                const springLen = (massX - massSize / 2) - wallX;
+                for (let i = 0; i <= segments; i++) {
+                    const px = wallX + (springLen * i / segments);
+                    const py = i === 0 || i === segments ? centerY : centerY + (i % 2 === 0 ? 15 : -15);
+                    ctx.lineTo(px, py);
+                }
+                ctx.stroke();
+
+                // Draw Mass
+                ctx.fillStyle = '#ef4444';
+                ctx.shadowBlur = 15; ctx.shadowColor = 'rgba(239, 68, 68, 0.5)';
+                ctx.fillRect(massX - massSize / 2, centerY - massSize / 2, massSize, massSize);
+                ctx.shadowBlur = 0;
+
+                // Labels
+                ctx.fillStyle = '#ededed';
+                ctx.font = '12px Inter';
+                ctx.textAlign = 'center';
+                ctx.fillText(`x = ${x.toFixed(2)}m`, massX, centerY - 30);
+            }, [x]);
+
+            return (
+                <div className="container">
+                    <div className="header">
+                        <h1>Harmonic Oscillator Simulator</h1>
+                    </div>
+
+                    <div className="grid-layout">
+                        <section className="main-sim">
+                            <div className="card">
+                                <canvas ref={canvasRef}></canvas>
+                            </div>
+                            <div className="stats-grid">
+                                <div className="stat-card">
+                                    <div className="stat-label">Total Energy</div>
+                                    <div className="stat-value">{(potE + kinE).toFixed(2)} J</div>
+                                </div>
+                                <div className="stat-card">
+                                    <div className="stat-label">Period</div>
+                                    <div className="stat-value">{(2 * Math.PI / omega).toFixed(2)} s</div>
+                                </div>
+                                <div className="stat-card">
+                                    <div className="stat-label">Velocity</div>
+                                    <div className="stat-value">{v.toFixed(2)} m/s</div>
+                                </div>
+                            </div>
+                        </section>
+
+                        <aside className="controls card">
+                            <div className="control-group">
+                                <div className="control-label">
+                                    <span>Mass (m)</span>
+                                    <span className="value-badge">{params.m} kg</span>
+                                </div>
+                                <input type="range" min="0.5" max="5" step="0.1" value={params.m}
+                                    onChange={e => setParams({ ...params, m: parseFloat(e.target.value) })} />
+                            </div>
+                            <div className="control-group">
+                                <div className="control-label">
+                                    <span>Spring Constant (k)</span>
+                                    <span className="value-badge">{params.k} N/m</span>
+                                </div>
+                                <input type="range" min="1" max="50" step="1" value={params.k}
+                                    onChange={e => setParams({ ...params, k: parseFloat(e.target.value) })} />
+                            </div>
+                            <div className="control-group">
+                                <div className="control-label">
+                                    <span>Initial Position (x₀)</span>
+                                    <span className="value-badge">{params.x0} m</span>
+                                </div>
+                                <input type="range" min="-3" max="3" step="0.1" value={params.x0}
+                                    onChange={e => { setParams({ ...params, x0: parseFloat(e.target.value) }); setTime(0); }} />
+                            </div>
+
+                            <button className="btn btn-primary" onClick={() => setPaused(!paused)}>
+                                {paused ? "START SIMULATION" : "PAUSE"}
+                            </button>
+                            <button className="btn btn-secondary" onClick={() => { setTime(0); setPaused(true); lastTimeRef.current = undefined; }}>
+                                RESET
+                            </button>
+                        </aside>
+                    </div>
+                </div>
+            );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+
+</html>
