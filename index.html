@@ -24,6 +24,9 @@
   <meta name="twitter:image" content="https://sho-physics.pages.dev/og-image.png">
 
   <link rel="canonical" href="https://sho-physics.pages.dev/">
+  <link rel="alternate" hreflang="ko" href="https://sho-physics.pages.dev/">
+  <link rel="alternate" hreflang="en" href="https://sho-physics.pages.dev/">
+  <link rel="alternate" hreflang="x-default" href="https://sho-physics.pages.dev/">
   <meta name="naver-site-verification" content="YOUR_NAVER_VERIFICATION_KEY">
 
   <title>SHM Master - 단조화 진동(SHM) 시뮬레이션 및 물리학 학습 도구</title>
@@ -58,10 +61,10 @@
         "@type": "WebApplication",
         "name": "SHM Master",
         "url": "https://sho-physics.pages.dev/",
-        "description": "단조화 진동(Simple Harmonic Motion)의 물리적 원리를 시각화하고 실험하는 교육용 웹 애플리케이션입니다.",
+        "description": "Interactive physics simulation of Simple Harmonic Motion (SHM). Learn physics through real-time visualization of position, velocity, and acceleration.",
         "applicationCategory": "EducationalApplication",
         "operatingSystem": "Web",
-        "inLanguage": "ko"
+        "inLanguage": ["ko", "en"]
       },
       {
         "@context": "https://schema.org",
@@ -69,18 +72,18 @@
         "mainEntity": [
           {
             "@type": "Question",
-            "name": "단조화 진동(SHM)이란 무엇인가요?",
+            "name": "What is Simple Harmonic Motion (SHM)?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "단조화 진동은 복원력이 변위에 비례하여 평형점을 중심으로 주기적으로 왕복하는 운동입니다. F = -kx 수식으로 설명됩니다."
+              "text": "Simple Harmonic Motion is a type of periodic motion where the restoring force is directly proportional to the displacement. It is described by the equation F = -kx."
             }
           },
           {
             "@type": "Question",
-            "name": "질량이 커지면 진동 주기는 어떻게 되나요?",
+            "name": "단조화 진동(SHM)이란 무엇인가요?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "주기 T = 2π√(m/k) 공식에 따라, 질량(m)이 커지면 주기는 길어지고 진동은 느려집니다."
+              "text": "단조화 진동은 복원력이 변위에 비례하는 형태의 주기적인 운동입니다. F = -kx 수식으로 설명됩니다."
             }
           }
         ]
@@ -477,193 +480,37 @@
     color: var(--text-secondary);
     font-size: 0.9rem;
   }
+
+  .lang-switcher {
+    display: flex;
+    gap: 0.5rem;
+    background: var(--bg-tertiary);
+    padding: 0.25rem;
+    border-radius: 8px;
+  }
+
+  .lang-btn {
+    padding: 0.4rem 0.8rem;
+    border-radius: 6px;
+    border: none;
+    background: transparent;
+    color: var(--text-secondary);
+    font-size: 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .lang-btn.active {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
 </style>
 </head>
 
 <body>
-
-  <header class="site-header">
-    <div class="nav-container">
-      <a href="/" class="logo">SHM Master</a>
-      <nav class="nav-links">
-        <a href="#simulation">시뮬레이션</a>
-        <a href="#theory">이론 및 원리</a>
-        <a href="#guide">사용 가이드</a>
-      </nav>
-    </div>
-  </header>
-
-  <main>
-    <div id="simulation" class="app-container">
-      <div class="header">
-        <h1>SHM Master: 단조화 진동(Simple Harmonic Motion) 인터랙티브 물리 실험실</h1>
-        <p style="color: var(--text-secondary); margin-top: 0.5rem; max-width: 800px;">
-          물리 법칙의 시각화: 스프링 상수, 질량, 초기 위치를 직접 조절하며 단조화 운동의 위치, 속도, 가속도 그래프를 실시간으로 관찰하고 학습하세요.
-        </p>
-      </div>
-      <div id="root"></div>
-    </div>
-
-    <section id="theory" class="content-section app-container">
-      <div class="article-card" style="min-height: 400px;">
-        <h2 class="article-title">단조화 진동(SHM)의 물리학적 원리와 공식 이해</h2>
-        <div
-          style="background: var(--bg-tertiary); padding: 1rem; border-radius: 8px; border-left: 4px solid var(--accent-purple); margin-bottom: 1.5rem; font-size: 0.9rem; font-style: italic;">
-          "자연계에서 일어나는 모든 진동 현상의 가장 단순하면서도 근본적인 모델은 단조화 진동입니다." — 물리학 원론
-        </div>
-        <p class="article-text">
-          <strong>단조화 진동(Simple Harmonic Motion, SHM)</strong>은 물리학에서 가장 기본적이면서도 중요한 운동 형태입니다.
-          복원력이 변위에 비례하고 방향이 반대인 경우($F = -kx$)에 발생하며, 이 시뮬레이터는 훅의 법칙(Hooke's Law)을 따르는 이상적인 1차원 용수철-질량 시스템을 완벽하게 구현합니다.
-          데이터에 따르면, 이상적인 단조화 진동에서 역학적 에너지는 보존되며 주기는 진폭과 무관하게 일정하게 유지되는 '등시성'을 가집니다.
-        </p>
-
-        <h3>1. 운동 방정식의 유도</h3>
-        <p class="article-text">
-          뉴턴의 제2법칙($F=ma$)과 훅의 법칙($F=-kx$)을 결합하면 다음과 같은 2계 미분방정식을 얻을 수 있습니다.
-        </p>
-
-        <div class="math-block">
-          $$ m \frac{d^2x}{dt^2} = -kx \quad \Rightarrow \quad \frac{d^2x}{dt^2} + \frac{k}{m}x = 0 $$
-        </div>
-
-        <p class="article-text">
-          이 미분방정식의 일반해는 사인(sine) 또는 코사인(cosine) 함수 꼴로 나타납니다.
-          여기서 각진동수 $\omega$ (omega)를 도입하면 수식이 간결해집니다.
-        </p>
-
-        <div class="math-block">
-          $$ \omega = \sqrt{\frac{k}{m}} \quad (\text{rad/s}) $$
-        </div>
-
-        <h3>2. 시간 함수로서의 위치, 속도, 가속도</h3>
-        <p class="article-text">
-          위 운동 방정식의 해를 통해 우리는 시간 $t$에 따른 물체의 상태를 정확히 예측할 수 있습니다.
-          시뮬레이터는 아래 수식을 실시간으로 계산하여 그래프로 표현합니다.
-        </p>
-        <ul>
-          <li class="article-text">
-            <strong>위치 $x(t)$</strong>: $A \cos(\omega t + \phi)$ <br>
-            <small>변위가 최대일 때 속도는 0이 됩니다.</small>
-          </li>
-          <li class="article-text">
-            <strong>속도 $v(t)$</strong>: $-\omega A \sin(\omega t + \phi)$ <br>
-            <small>평형점($x=0$)을 지날 때 속력이 최대가 됩니다.</small>
-          </li>
-          <li class="article-text">
-            <strong>가속도 $a(t)$</strong>: $-\omega^2 A \cos(\omega t + \phi)$ <br>
-            <small>가속도는 항상 변위와 반대 방향(복원력의 방향)으로 작용합니다.</small>
-          </li>
-        </ul>
-        <p class="article-text">
-          여기서 $A$는 진폭(Amplitude), $\phi$는 초기 위상각(Phase Constant)으로, 이는 초기 조건($x_0, v_0$)에 의해 결정됩니다.
-        </p>
-      </div>
-
-      <div class="article-card">
-        <h2 class="article-title">실생활에서의 단조화 진동</h2>
-        <p class="article-text">
-          SHM은 단순한 이론적 모델을 넘어 자연계와 공학 전반에서 발견되는 보편적인 현상입니다.
-        </p>
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 1.5rem;">
-          <div>
-            <h4 style="color: var(--accent-blue); margin-bottom: 0.5rem;">🎸 악기의 진동</h4>
-            <p class="article-text" style="font-size: 0.95rem;">
-              기타 줄을 튕기거나 소리굽쇠를 칠 때 발생하는 진동은 SHM의 대표적인 예입니다.
-              이 진동수가 소리의 높낮이(음정)를 결정합니다.
-            </p>
-          </div>
-          <div>
-            <h4 style="color: var(--accent-green); margin-bottom: 0.5rem;">🚗 자동차 서스펜션</h4>
-            <p class="article-text" style="font-size: 0.95rem;">
-              자동차의 쇼크 업소버와 스프링은 노면의 충격을 흡수하기 위해 감쇠 진동을 합니다.
-              기본 원리는 SHM과 동일하며, 승차감을 결정하는 중요한 요소입니다.
-            </p>
-          </div>
-          <div>
-            <h4 style="color: var(--accent-purple); margin-bottom: 0.5rem;">⚛️ 분자의 열운동</h4>
-            <p class="article-text" style="font-size: 0.95rem;">
-              고체 결정 내의 원자들은 평형 위치를 중심으로 끊임없이 미세하게 진동하고 있습니다.
-              이러한 진동 모델은 재료의 열용량 등을 설명하는 데 사용됩니다.
-            </p>
-          </div>
-          <div>
-            <h4 style="color: var(--accent-red); margin-bottom: 0.5rem;">🕰️ 시계의 진자</h4>
-            <p class="article-text" style="font-size: 0.95rem;">
-              작은 각도로 움직이는 단진자(Pendulum)는 SHM으로 근사할 수 있습니다.
-              이 등시성을 이용하여 정확한 시간을 측정하는 괘종시계가 만들어졌습니다.
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <div class="article-card">
-        <h2 class="article-title">에너지 보존 법칙의 시각화</h2>
-        <p class="article-text">
-          이 시뮬레이터에서는 마찰이나 공기 저항과 같은 비보존력을 고려하지 않으므로,
-          역학적 에너지(위치 에너지 + 운동 에너지)의 총합은 항상 일정하게 보존됩니다.
-        </p>
-        <ul>
-          <li class="article-text"><strong>탄성 위치 에너지 ($U_s$):</strong> 용수철이 $x$만큼 변형되었을 때 저장된 에너지입니다. ($U_s =
-            \frac{1}{2}kx^2$)</li>
-          <li class="article-text"><strong>운동 에너지 ($K$):</strong> 질량 $m$인 물체가 속도 $v$로 움직일 때 가지는 에너지입니다. ($K =
-            \frac{1}{2}mv^2$)</li>
-        </ul>
-        <p class="article-text">
-          그래프를 관찰해 보세요. 위치($x$)가 최대일 때(양끝 점), 속도($v$)는 0이 되며 모든 에너지는 위치 에너지 형태로 존재합니다.
-          반대로 위치가 0일 때(평형점), 속도는 최대가 되며 모든 에너지는 운동 에너지로 전환됩니다.
-          우측 대시보드의 <strong>'Energy (E)'</strong> 값이 시간이 지나도 변하지 않는 것을 통해 이를 확인할 수 있습니다.
-        </p>
-      </div>
-    </section>
-
-    <section id="guide" class="content-section app-container" style="margin-top: -2rem;">
-      <div class="article-card">
-        <h2 class="article-title">실험 가이드: 직접 확인해보세요</h2>
-        <p class="article-text">
-          단순히 구경하는 것을 넘어, 파라미터를 조절하며 다음과 같은 물리적 현상을 직접 검증해 볼 수 있습니다.
-        </p>
-
-        <div
-          style="background: rgba(59, 130, 246, 0.1); border-left: 4px solid var(--accent-blue); padding: 1.5rem; border-radius: 0 8px 8px 0; margin-bottom: 2rem;">
-          <h3 style="color: var(--text-primary); margin-top: 0;">🧪 실험 1: 질량이 주기에 미치는 영향</h3>
-          <p class="article-text" style="margin-bottom: 1rem;">
-            이론상 질량($m$)이 4배가 되면 주기($T = 2\pi\sqrt{m/k}$)는 2배가 되어야 합니다.
-          </p>
-          <ol class="article-text">
-            <li>'질량(m)'을 <strong>1.0kg</strong>으로 설정하고 주기를 확인합니다.</li>
-            <li>'질량(m)'을 <strong>4.0kg</strong>으로 늘려보세요.</li>
-            <li>용수철의 움직임이 훨씬 느려진 것을 볼 수 있으며, 대시보드의 <strong>Period(T)</strong> 값이 정확히 2배가 되었는지 확인해보세요.</li>
-          </ol>
-        </div>
-
-        <div
-          style="background: rgba(16, 185, 129, 0.1); border-left: 4px solid var(--accent-green); padding: 1.5rem; border-radius: 0 8px 8px 0;">
-          <h3 style="color: var(--text-primary); margin-top: 0;">🧪 실험 2: 초기 조건과 진폭의 관계</h3>
-          <p class="article-text" style="margin-bottom: 1rem;">
-            초기 위치에서 가만히 놓는 경우($v_0=0$)와, 밀면서 시작하는 경우($v_0 \neq 0$)의 차이는 무엇일까요?
-          </p>
-          <ol class="article-text">
-            <li>'초기 위치'를 <strong>2.0m</strong>, '초기 속도'를 <strong>0</strong>으로 설정하세요. 진폭은 정확히 2.0m일 것입니다.</li>
-            <li>이제 '초기 속도'를 <strong>3.0m/s</strong>로 높여보세요.</li>
-            <li>물체가 초기 위치보다 더 멀리 튕겨 나가는 것을 볼 수 있습니다. 이는 초기 운동 에너지가 추가되었기 때문입니다.</li>
-          </ol>
-        </div>
-      </div>
-
-  </main>
-
-  <footer class="site-footer">
-    <div class="footer-content">
-      <div class="copyright">
-        &copy; 2024 SHM Master. All rights reserved.
-      </div>
-      <div class="footer-links">
-        <a href="/privacy.html">개인정보처리방침</a>
-        <a href="/terms.html">이용약관</a>
-      </div>
-    </div>
-  </footer>
-
+  <div id="root"></div>
 
   <!-- React Dependencies moved to improve PageSpeed -->
   <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
@@ -674,8 +521,168 @@
   <script type="text/babel">
     const { useState, useEffect, useRef, useMemo } = React;
 
+    const translations = {
+      ko: {
+        logo: "SHM Master",
+        nav_sim: "시뮬레이션",
+        nav_theory: "이론 및 원리",
+        nav_guide: "사용 가이드",
+        title: "SHM Master: 단조화 진동(Simple Harmonic Motion) 인터랙티브 물리 실험실",
+        desc: "물리 법칙의 시각화: 스프링 상수, 질량, 초기 위치를 직접 조절하며 단조화 운동의 위치, 속도, 가속도 그래프를 실시간으로 관찰하고 학습하세요.",
+        params_title: "매개변수 설정",
+        label_x0: "초기 위치 (x₀)",
+        label_v0: "초기 속도 (v₀)",
+        label_m: "질량 (m)",
+        label_k: "스프링 상수 (k)",
+        btn_start: "시작",
+        btn_pause: "일시정지",
+        btn_reset: "초기화",
+        dash_period: "주기 (T)",
+        dash_freq: "각진동수 (ω)",
+        dash_energy: "에너지 (E)",
+        dash_amp: "진폭 (A)",
+        contact_title: "🤝 제휴 문의",
+        contact_desc: "시뮬레이션 도입 및 협업 문의는 아래 폼을 통해 남겨주세요.",
+        contact_name: "성함/기업명",
+        contact_email: "이메일 주소",
+        contact_msg: "문의 내용을 입력해 주세요.",
+        contact_submit: "문의 보내기",
+        theory_title: "단조화 진동(SHM)의 물리학적 원리와 공식 이해",
+        theory_quote: '"자연계에서 일어나는 모든 진동 현상의 가장 단순하면서도 근본적인 모델은 단조화 진동입니다." — 물리학 원론',
+        theory_p1: "단조화 진동(Simple Harmonic Motion, SHM)은 물리학에서 가장 기본적이면서도 중요한 운동 형태입니다. 복원력이 변위에 비례하고 방향이 반대인 경우(F = -kx)에 발생하며, 이 시뮬레이터는 훅의 법칙(Hooke's Law)을 따르는 이상적인 1차원 용수철-질량 시스템을 완벽하게 구현합니다. 데이터에 따르면, 이상적인 단조화 진동에서 역학적 에너지는 보존되며 주기는 진폭과 무관하게 일정하게 유지되는 '등시성'을 가집니다.",
+        theory_h3_1: "1. 운동 방정식의 유도",
+        theory_p2: "뉴턴의 제2법칙(F=ma)과 훅의 법칙(F=-kx)을 결합하면 다음과 같은 2계 미분방정식을 얻을 수 있습니다.",
+        theory_p3: "이 미분방정식의 일반해는 사인(sine) 또는 코사인(cosine) 함수 꼴로 나타납니다. 여기서 각진동수 ω (omega)를 도입하면 수식이 간결해집니다.",
+        theory_h3_2: "2. 시간 함수로서의 위치, 속도, 가속도",
+        theory_p4: "위 운동 방정식의 해를 통해 우리는 시간 t에 따른 물체의 상태를 정확히 예측할 수 있습니다. 시뮬레이터는 아래 수식을 실시간으로 계산하여 그래프로 표현합니다.",
+        theory_pos: "위치 x(t)",
+        theory_pos_desc: "변위가 최대일 때 속도는 0이 됩니다.",
+        theory_vel: "속도 v(t)",
+        theory_vel_desc: "평형점(x=0)을 지날 때 속력이 최대가 됩니다.",
+        theory_acc: "가속도 a(t)",
+        theory_acc_desc: "가속도는 항상 변위와 반대 방향(복원력의 방향)으로 작용합니다.",
+        theory_p5: "여기서 A는 진폭(Amplitude), φ는 초기 위상각(Phase Constant)으로, 이는 초기 조건(x₀, v₀)에 의해 결정됩니다.",
+        real_title: "실생활에서의 단조화 진동",
+        real_p1: "SHM은 단순한 이론적 모델을 넘어 자연계와 공학 전반에서 발견되는 보편적인 현상입니다.",
+        real_item1_t: "🎸 악기의 진동",
+        real_item1_d: "기타 줄을 튕기거나 소리굽쇠를 칠 때 발생하는 진동은 SHM의 대표적인 예입니다. 이 진동수가 소리의 높낮이를 결정합니다.",
+        real_item2_t: "🚗 자동차 서스펜션",
+        real_item2_d: "자동차의 쇼크 업소버와 스프링은 노면의 충격을 흡수하기 위해 감쇠 진동을 합니다. 기본 원리는 SHM과 동일합니다.",
+        real_item3_t: "⚛️ 분자의 열운동",
+        real_item3_d: "고체 결정 내의 원자들은 평형 위치를 중심으로 끊임없이 미세하게 진동하고 있습니다. 이 모델은 재료의 열용량 등을 설명하는 데 사용됩니다.",
+        real_item4_t: "🕰️ 시계의 진자",
+        real_item4_d: "작은 각도로 움직이는 단진자는 SHM으로 근사할 수 있습니다. 이 등시성을 이용하여 정확한 시간을 측정하는 시계가 만들어졌습니다.",
+        energy_title: "에너지 보존 법칙의 시각화",
+        energy_p1: "이 시뮬레이터에서는 마찰이나 공기 저항과 같은 비보존력을 고려하지 않으므로, 역학적 에너지의 총합은 항상 일정하게 보존됩니다.",
+        energy_item1: "탄성 위치 에너지 (Us): 용수철이 x만큼 변형되었을 때 저장된 에너지입니다. (Us = ½kx²)",
+        energy_item2: "운동 에너지 (K): 질량 m인 물체가 속도 v로 움직일 때 가지는 에너지입니다. (K = ½mv²)",
+        energy_p2: "그래프를 관찰하세요. 위치가 최대일 때 속도는 0이 되며 모든 에너지는 위치 에너지 형태로 존재합니다. 반대로 위치가 0일 때 속도는 최대가 되며 에너지는 운동 에너지로 전환됩니다.",
+        guide_title: "실험 가이드: 직접 확인해보세요",
+        guide_p1: "단순히 구경하는 것을 넘어, 파라미터를 조절하며 다음과 같은 물리적 현상을 직접 검증해 볼 수 있습니다.",
+        guide_tip_t: "💡 실험 꿀팁",
+        guide_tip_d: "시뮬레이션을 일시정지한 상태에서도 슬라이더를 통해 변수값을 변경할 수 있습니다.",
+        guide_exp1_t: "🧪 실험 1: 질량이 주기에 미치는 영향",
+        guide_exp1_p1: "이론상 질량(m)이 4배가 되면 주기(T)는 2배가 되어야 합니다.",
+        guide_exp1_s1: "'질량(m)'을 1.0kg으로 설정하고 주기를 확인합니다.",
+        guide_exp1_s2: "'질량(m)'을 4.0kg으로 늘려보세요.",
+        guide_exp1_s3: "용수철의 움직임이 훨씬 느려진 것을 볼 수 있으며, 대시보드의 Period(T) 값이 정확히 2배가 되었는지 확인해보세요.",
+        guide_exp2_t: "🧪 실험 2: 초기 조건과 진폭의 관계",
+        guide_exp2_p1: "초기 위치에서 가만히 놓는 경우와, 밀면서 시작하는 경우의 차이는 무엇일까요?",
+        guide_exp2_s1: "'초기 위치'를 2.0m, '초기 속도'를 0으로 설정하세요.",
+        guide_exp2_s2: "이제 '초기 속도'를 3.0m/s로 높여보세요. 물체가 초기 위치보다 더 멀리 튕겨 나가는 것을 볼 수 있습니다.",
+        footer_privacy: "개인정보처리방침",
+        footer_terms: "이용약관",
+        graph_x: "위치 (x)",
+        graph_v: "속도 (v)",
+        graph_a: "가속도 (a)",
+        meta_title: "SHM Master - 단조화 진동(SHM) 시뮬레이션 및 물리학 학습 도구",
+        meta_desc: "단조화 진동(Simple Harmonic Motion)의 물리적 원리를 완벽하게 이해할 수 있는 대화형 물리 시뮬레이션입니다. 주기, 진폭, 질량, 용수철 상수를 직접 조절하며 위치, 속도, 가속도의 관계를 실시간 그래프로 학습하세요. 중고등학교 및 대학교 물리 실험 교구로 최적화되었습니다."
+      },
+      en: {
+        logo: "SHM Master",
+        nav_sim: "Simulation",
+        nav_theory: "Theory",
+        nav_guide: "Guide",
+        title: "SHM Master: Interactive Simple Harmonic Motion Lab",
+        desc: "Visualize Physics Laws: Adjust spring constant, mass, and initial conditions to observe real-time graphs of position, velocity, and acceleration.",
+        params_title: "Parameter Settings",
+        label_x0: "Initial Position (x₀)",
+        label_v0: "Initial Velocity (v₀)",
+        label_m: "Mass (m)",
+        label_k: "Spring Constant (k)",
+        btn_start: "Start",
+        btn_pause: "Pause",
+        btn_reset: "Reset",
+        dash_period: "Period (T)",
+        dash_freq: "Angular Freq (ω)",
+        dash_energy: "Energy (E)",
+        dash_amp: "Amplitude (A)",
+        contact_title: "🤝 Business Inquiry",
+        contact_desc: "Please use the form below for simulation integration or collaboration inquiries.",
+        contact_name: "Name/Company",
+        contact_email: "Email Address",
+        contact_msg: "Type your message here...",
+        contact_submit: "Send Message",
+        theory_title: "Understanding Physics of SHM",
+        theory_quote: '"Simple Harmonic Motion is the most fundamental model for all oscillatory phenomena in nature." — Principles of Physics',
+        theory_p1: "Simple Harmonic Motion (SHM) is a fundamental type of periodic motion where the restoring force is directly proportional to the displacement (F = -kx). This simulator perfectly implements an ideal 1D spring-mass system following Hooke's Law. Data confirms that in ideal SHM, mechanical energy is conserved and the period remains constant regardless of amplitude (Isochronism).",
+        theory_h3_1: "1. Derivation of Equation of Motion",
+        theory_p2: "By combining Newton's Second Law (F=ma) and Hooke's Law (F=-kx), we obtain the following second-order differential equation:",
+        theory_p3: "The general solution is a sine or cosine function. Introducing angular frequency ω (omega) simplifies the notation:",
+        theory_h3_2: "2. Position, Velocity, and Acceleration over Time",
+        theory_p4: "Using the solution, we can precisely predict the state of the object at time t. The simulator calculates and graphs the following formulas in real-time:",
+        theory_pos: "Position x(t)",
+        theory_pos_desc: "Velocity becomes zero at maximum displacement.",
+        theory_vel: "Velocity v(t)",
+        theory_vel_desc: "Velocity is at its maximum when passing the equilibrium point (x=0).",
+        theory_acc: "Acceleration a(t)",
+        theory_acc_desc: "Acceleration always acts in the opposite direction of displacement.",
+        theory_p5: "Where A is Amplitude and φ is the initial Phase Constant, determined by initial conditions (x₀, v₀).",
+        real_title: "Real-world Applications",
+        real_p1: "SHM is a universal phenomenon found throughout nature and engineering.",
+        real_item1_t: "🎸 Musical Instruments",
+        real_item1_d: "Vibrations in guitar strings or tuning forks are classic examples of SHM. This frequency determines the pitch.",
+        real_item2_t: "🚗 Car Suspension",
+        real_item2_d: "Shock absorbers and springs perform damped oscillations to absorb road impacts based on SHM principles.",
+        real_item3_t: "⚛️ Molecular Vibration",
+        real_item3_d: "Atoms in solid crystals oscillate around equilibrium positions, explaining thermal properties of materials.",
+        real_item4_t: "🕰️ Clock Pendulum",
+        real_item4_d: "Pendulums moving at small angles approximate SHM, used for precise timekeeping in clocks.",
+        energy_title: "Visualization of Energy Conservation",
+        energy_p1: "In this simulation, non-conservative forces like friction are ignored, so total mechanical energy is always conserved.",
+        energy_item1: "Elastic Potential Energy (Us): Energy stored when the spring is deformed by x. (Us = ½kx²)",
+        energy_item2: "Kinetic Energy (K): Energy of an object with mass m moving at velocity v. (K = ½mv²)",
+        energy_p2: "Observe the graphs: at max displacement, velocity is zero and all energy is potential. At x=0, velocity is max and all energy converts to kinetic.",
+        guide_title: "Experimental Guide",
+        guide_p1: "Go beyond watching: adjust parameters to verify these physical phenomena yourself.",
+        guide_tip_t: "💡 Pro Tip",
+        guide_tip_d: "You can change variables using sliders even when the simulation is paused.",
+        guide_exp1_t: "🧪 Exp 1: Effect of Mass on Period",
+        guide_exp1_p1: "Theoretically, when mass (m) quadruples, the period (T) should double.",
+        guide_exp1_s1: "Set Mass (m) to 1.0kg and check the period.",
+        guide_exp1_s2: "Increase Mass (m) to 4.0kg.",
+        guide_exp1_s3: "Notice the motion is much slower and the Period (T) on the dashboard has exactly doubled.",
+        guide_exp2_t: "🧪 Exp 2: Initial Conditions and Amplitude",
+        guide_exp2_p1: "What is the difference between releasing from rest and pushing at the start?",
+        guide_exp2_s1: "Set Initial Position to 2.0m and Initial Velocity to 0. Amplitude will be exactly 2.0m.",
+        guide_exp2_s2: "Now increase Initial Velocity to 3.0m/s. Notice it swings much further due to added kinetic energy.",
+        footer_privacy: "Privacy Policy",
+        footer_terms: "Terms of Service",
+        graph_x: "Position (x)",
+        graph_v: "Velocity (v)",
+        graph_a: "Acceleration (a)",
+        meta_title: "SHM Master - Interactive Simple Harmonic Motion Lab & Physics Simulator",
+        meta_desc: "Master Simple Harmonic Motion (SHM) with our interactive physics lab. Real-time visualization of position, velocity, and acceleration. Perfect for students and physics enthusiasts."
+      }
+    };
+
     const App = () => {
-      // -- Physics State --
+      const [lang, setLang] = useState(() => {
+        const browserLang = navigator.language.split('-')[0];
+        return browserLang === 'ko' ? 'ko' : 'en';
+      });
+      const t = translations[lang];
+
       const [params, setParams] = useState({
         m: 1.0,  // kg
         k: 10.0, // N/m
@@ -688,7 +695,6 @@
       const requestRef = useRef();
       const lastTimeRef = useRef();
 
-      // -- Physics Calculations --
       const physics = useMemo(() => {
         const omega = Math.sqrt(params.k / params.m);
         const A = Math.sqrt(params.x0 ** 2 + (params.v0 / omega) ** 2);
@@ -705,7 +711,6 @@
 
       const currentState = getStates(time);
 
-      // -- Animation Loop --
       const animate = (t) => {
         if (lastTimeRef.current !== undefined) {
           const dt = Math.min((t - lastTimeRef.current) / 1000, 0.05);
@@ -725,7 +730,6 @@
         return () => cancelAnimationFrame(requestRef.current);
       }, [paused]);
 
-      // -- Drawing Functions --
       const oscCanvasRef = useRef();
       const xGraphRef = useRef();
       const vGraphRef = useRef();
@@ -751,22 +755,14 @@
         const mSize = 44;
 
         ctx.clearRect(0, 0, w, h);
-
-        // Floor (Simpler look)
         ctx.strokeStyle = '#262626';
         ctx.beginPath(); ctx.moveTo(0, centerY + mSize / 2); ctx.lineTo(w, centerY + mSize / 2); ctx.stroke();
-
-        // Equilibrium Line
         ctx.strokeStyle = 'rgba(255,255,255,0.05)';
         ctx.setLineDash([5, 5]);
         ctx.beginPath(); ctx.moveTo(eqX, 0); ctx.lineTo(eqX, h); ctx.stroke();
         ctx.setLineDash([]);
-
-        // Wall
         ctx.fillStyle = '#333';
         ctx.fillRect(0, centerY - 60, wallX, 120);
-
-        // Spring
         ctx.strokeStyle = '#10b981';
         ctx.lineWidth = 2;
         ctx.beginPath();
@@ -779,13 +775,10 @@
           ctx.lineTo(x, y);
         }
         ctx.stroke();
-
-        // Mass
         ctx.fillStyle = '#ef4444';
         ctx.shadowBlur = 20; ctx.shadowColor = 'rgba(239, 68, 68, 0.4)';
         ctx.fillRect(massX - mSize / 2, centerY - mSize / 2, mSize, mSize);
         ctx.shadowBlur = 0;
-
         ctx.fillStyle = '#fff';
         ctx.font = 'bold 12px Inter';
         ctx.textAlign = 'center';
@@ -808,8 +801,7 @@
         const graphW = w - padding.left - padding.right;
         const graphH = h - padding.top - padding.bottom;
         const midY = padding.top + graphH / 2;
-
-        const timeScale = 40; // px / sec
+        const timeScale = 40;
         const timeWindow = graphW / timeScale;
         const startTime = Math.max(0, time - timeWindow * 0.8);
 
@@ -822,42 +814,29 @@
         const valScale = (graphH / 2 * 0.8) / safeMax;
 
         ctx.clearRect(0, 0, w, h);
-
-        // Grid lines
         ctx.strokeStyle = 'rgba(255,255,255,0.03)';
         ctx.lineWidth = 1;
         for (let i = 0; i <= 4; i++) {
           const y = padding.top + (graphH * i / 4);
           ctx.beginPath(); ctx.moveTo(padding.left, y); ctx.lineTo(w - padding.right, y); ctx.stroke();
         }
-
-        // Axes
         ctx.strokeStyle = 'rgba(255,255,255,0.2)';
-        ctx.lineWidth = 1;
-        ctx.beginPath(); ctx.moveTo(padding.left, midY); ctx.lineTo(w - padding.right, midY); ctx.stroke(); // X
-        ctx.beginPath(); ctx.moveTo(padding.left, padding.top); ctx.lineTo(padding.left, h - padding.bottom); ctx.stroke(); // Y
-
-        // Labels
+        ctx.beginPath(); ctx.moveTo(padding.left, midY); ctx.lineTo(w - padding.right, midY); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(padding.left, padding.top); ctx.lineTo(padding.left, h - padding.bottom); ctx.stroke();
         ctx.fillStyle = 'rgba(255,255,255,0.5)';
         ctx.font = '10px Inter';
         ctx.textAlign = 'right';
         ctx.textBaseline = 'middle';
-
-        // Y-Axis Ticks
         const unit = type === 'x' ? 'm' : (type === 'v' ? 'm/s' : 'm/s²');
         ctx.fillText(`${safeMax.toFixed(1)}`, padding.left - 8, midY - safeMax * valScale);
         ctx.fillText(`0`, padding.left - 8, midY);
         ctx.fillText(`-${safeMax.toFixed(1)}`, padding.left - 8, midY + safeMax * valScale);
-
-        // Axis Title
         ctx.save();
         ctx.translate(15, midY);
         ctx.rotate(-Math.PI / 2);
         ctx.textAlign = 'center';
         ctx.fillText(`${type.toUpperCase()} (${unit})`, 0, 0);
         ctx.restore();
-
-        // X-Axis Ticks
         ctx.textAlign = 'center';
         ctx.textBaseline = 'top';
         for (let tLine = Math.ceil(startTime); tLine <= startTime + timeWindow; tLine++) {
@@ -866,8 +845,6 @@
             ctx.fillText(`${tLine}s`, xPos, h - padding.bottom + 5);
           }
         }
-
-        // Plot
         ctx.save();
         ctx.beginPath();
         ctx.rect(padding.left, padding.top, graphW, graphH);
@@ -884,16 +861,12 @@
           if (px === 0) ctx.moveTo(xPos, py); else ctx.lineTo(xPos, py);
         }
         ctx.stroke();
-
-        // Cursor
         const cursorX = padding.left + (time - startTime) * timeScale;
         if (cursorX >= padding.left && cursorX <= w - padding.right) {
           ctx.fillStyle = '#fff';
           ctx.beginPath(); ctx.arc(cursorX, midY - currentState[type] * valScale, 4, 0, Math.PI * 2); ctx.fill();
         }
         ctx.restore();
-
-        // Current Value
         ctx.fillStyle = color;
         ctx.font = 'bold 11px monospace';
         ctx.textAlign = 'right';
@@ -907,101 +880,208 @@
         drawGraph(aGraphRef, 'a', '#a855f7');
       }, [time, physics]);
 
+      useEffect(() => {
+        if (window.MathJax && window.MathJax.typeset) window.MathJax.typeset();
+
+        // Update Document Metadata for SEO/GEO
+        document.title = t.meta_title;
+        document.documentElement.lang = lang;
+        const metaDesc = document.querySelector('meta[name="description"]');
+        if (metaDesc) metaDesc.setAttribute('content', t.meta_desc);
+      }, [lang]);
+
       const updateParam = (key, val) => {
         setParams(prev => ({ ...prev, [key]: val }));
-        if (key === 'x0' || key === 'v0') {
-          setTime(0);
-          setPaused(true);
-        }
+        if (key === 'x0' || key === 'v0') { setTime(0); setPaused(true); }
       };
 
       return (
-        <div className="main-layout" style={{ maxWidth: 'unset', display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) 340px' }}>
-          <div className="sim-view card">
-            <canvas ref={oscCanvasRef} className="oscillator-canvas"></canvas>
+        <React.Fragment>
+          <header className="site-header">
+            <div className="nav-container">
+              <a href="/" className="logo">{t.logo}</a>
+              <nav className="nav-links">
+                <a href="#simulation">{t.nav_sim}</a>
+                <a href="#theory">{t.nav_theory}</a>
+                <a href="#guide">{t.nav_guide}</a>
+                <div className="lang-switcher">
+                  <button className={`lang-btn ${lang === 'ko' ? 'active' : ''}`} onClick={() => setLang('ko')}>KO</button>
+                  <button className={`lang-btn ${lang === 'en' ? 'active' : ''}`} onClick={() => setLang('en')}>EN</button>
+                </div>
+              </nav>
+            </div>
+          </header>
 
-            <div className="graphs-container">
-              <div className="graph-item">
-                <div className="graph-label"><div className="dot" style={{ background: '#3b82f6' }}></div> Position (x)</div>
-                <canvas ref={xGraphRef} className="graph-canvas"></canvas>
+          <main>
+            <div id="simulation" className="app-container">
+              <div className="header">
+                <h1>{t.title}</h1>
+                <p style={{ color: 'var(--text-secondary)', marginTop: '0.5rem', maxWidth: '800px' }}>{t.desc}</p>
               </div>
-              <div className="graph-item">
-                <div className="graph-label"><div className="dot" style={{ background: '#10b981' }}></div> Velocity (v)</div>
-                <canvas ref={vGraphRef} className="graph-canvas"></canvas>
-              </div>
-              <div className="graph-item">
-                <div className="graph-label"><div className="dot" style={{ background: '#a855f7' }}></div> Acceleration (a)</div>
-                <canvas ref={aGraphRef} className="graph-canvas"></canvas>
+
+              <div className="main-layout">
+                <div className="sim-view card">
+                  <canvas ref={oscCanvasRef} className="oscillator-canvas"></canvas>
+                  <div className="graphs-container">
+                    <div className="graph-item">
+                      <div className="graph-label"><div className="dot" style={{ background: '#3b82f6' }}></div> {t.graph_x}</div>
+                      <canvas ref={xGraphRef} className="graph-canvas"></canvas>
+                    </div>
+                    <div className="graph-item">
+                      <div className="graph-label"><div className="dot" style={{ background: '#10b981' }}></div> {t.graph_v}</div>
+                      <canvas ref={vGraphRef} className="graph-canvas"></canvas>
+                    </div>
+                    <div className="graph-item">
+                      <div className="graph-label"><div className="dot" style={{ background: '#a855f7' }}></div> {t.graph_a}</div>
+                      <canvas ref={aGraphRef} className="graph-canvas"></canvas>
+                    </div>
+                  </div>
+                </div>
+
+                <aside className="control-section">
+                  <div className="card">
+                    <h3 style={{ margin: '0 0 1.5rem 0', fontSize: '1rem' }}>{t.params_title}</h3>
+                    <div className="control-item">
+                      <div className="label-row"><span>{t.label_x0}</span> <span className="val-text">{params.x0.toFixed(1)} m</span></div>
+                      <input type="range" min="-4" max="4" step="0.1" value={params.x0} onChange={e => updateParam('x0', parseFloat(e.target.value))} />
+                    </div>
+                    <div className="control-item">
+                      <div className="label-row"><span>{t.label_v0}</span> <span className="val-text">{params.v0.toFixed(1)} m/s</span></div>
+                      <input type="range" min="-10" max="10" step="0.5" value={params.v0} onChange={e => updateParam('v0', parseFloat(e.target.value))} />
+                    </div>
+                    <div className="control-item">
+                      <div className="label-row"><span>{t.label_m}</span> <span className="val-text">{params.m.toFixed(1)} kg</span></div>
+                      <input type="range" min="0.5" max="5" step="0.1" value={params.m} onChange={e => updateParam('m', parseFloat(e.target.value))} />
+                    </div>
+                    <div className="control-item">
+                      <div className="label-row"><span>{t.label_k}</span> <span className="val-text">{params.k} N/m</span></div>
+                      <input type="range" min="1" max="50" step="1" value={params.k} onChange={e => updateParam('k', parseFloat(e.target.value))} />
+                    </div>
+                    <div className="button-group">
+                      <button className={`btn ${paused ? 'btn-play' : 'btn-pause'}`} onClick={() => setPaused(!paused)}>{paused ? t.btn_start : t.btn_pause}</button>
+                      <button className="btn btn-reset" onClick={() => { setTime(0); setPaused(true); }}>{t.btn_reset}</button>
+                    </div>
+                  </div>
+
+                  <div className="dashboard">
+                    <div className="dash-card"><div className="dash-val">{(2 * Math.PI / physics.omega).toFixed(2)}s</div><div className="dash-lbl">{t.dash_period}</div></div>
+                    <div className="dash-card"><div className="dash-val">{physics.omega.toFixed(2)}</div><div className="dash-lbl">{t.dash_freq}</div></div>
+                    <div className="dash-card"><div className="dash-val">{(0.5 * params.k * currentState.x ** 2 + 0.5 * params.m * currentState.v ** 2).toFixed(1)}J</div><div className="dash-lbl">{t.dash_energy}</div></div>
+                    <div className="dash-card"><div className="dash-val">{physics.A.toFixed(2)}m</div><div className="dash-lbl">{t.dash_amp}</div></div>
+                  </div>
+
+                  <div className="card contact-card">
+                    <h3 style={{ margin: '0 0 1rem 0', fontSize: '1rem', color: 'var(--accent-blue)' }}>{t.contact_title}</h3>
+                    <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', marginBottom: '1rem' }}>{t.contact_desc}</p>
+                    <form action="https://formspree.io/f/xvzzpqdq" method="POST" className="contact-form">
+                      <input type="text" name="name" className="form-input" placeholder={t.contact_name} required />
+                      <input type="email" name="email" className="form-input" placeholder={t.contact_email} required />
+                      <textarea name="message" className="form-textarea" placeholder={t.contact_msg} required></textarea>
+                      <button type="submit" className="btn-submit">{t.contact_submit}</button>
+                    </form>
+                  </div>
+                </aside>
               </div>
             </div>
-          </div>
 
-          <aside className="control-section">
-            <div className="card">
-              <h3 style={{ margin: '0 0 1.5rem 0', fontSize: '1rem' }}>매개변수 설정</h3>
-
-              <div className="control-item">
-                <div className="label-row"><span>초기 위치 (x₀)</span> <span className="val-text">{params.x0.toFixed(1)} m</span></div>
-                <input type="range" min="-4" max="4" step="0.1" value={params.x0} onChange={e => updateParam('x0', parseFloat(e.target.value))} />
+            <section id="theory" className="content-section app-container">
+              <div className="article-card" style={{ minHeight: '400px' }}>
+                <h2 className="article-title">{t.theory_title}</h2>
+                <div style={{ background: 'var(--bg-tertiary)', padding: '1rem', borderRadius: '8px', borderLeft: '4px solid var(--accent-purple)', marginBottom: '1.5rem', fontSize: '0.9rem', fontStyle: 'italic' }}>
+                  {t.theory_quote}
+                </div>
+                <p className="article-text">{t.theory_p1}</p>
+                <h3>{t.theory_h3_1}</h3>
+                <p className="article-text">{t.theory_p2}</p>
+                <div className="math-block">{"$$ m \\frac{d^2x}{dt^2} = -kx \\quad \\Rightarrow \\quad \\frac{d^2x}{dt^2} + \\frac{k}{m}x = 0 $$"}</div>
+                <p className="article-text">{t.theory_p3}</p>
+                <div className="math-block">{"$$ \\omega = \\sqrt{\\frac{k}{m}} \\quad (\\text{rad/s}) $$"}</div>
+                <h3>{t.theory_h3_2}</h3>
+                <p className="article-text">{t.theory_p4}</p>
+                <ul>
+                  <li className="article-text"><strong>{t.theory_pos}</strong>: {"$A \\cos(\\omega t + \\phi)$"} <br /><small>{t.theory_pos_desc}</small></li>
+                  <li className="article-text"><strong>{t.theory_vel}</strong>: {"$-\\omega A \\sin(\\omega t + \\phi)$"} <br /><small>{t.theory_vel_desc}</small></li>
+                  <li className="article-text"><strong>{t.theory_acc}</strong>: {"$-\\omega^2 A \\cos(\\omega t + \\phi)$"} <br /><small>{t.theory_acc_desc}</small></li>
+                </ul>
+                <p className="article-text">{t.theory_p5}</p>
               </div>
 
-              <div className="control-item">
-                <div className="label-row"><span>초기 속도 (v₀)</span> <span className="val-text">{params.v0.toFixed(1)} m/s</span></div>
-                <input type="range" min="-10" max="10" step="0.5" value={params.v0} onChange={e => updateParam('v0', parseFloat(e.target.value))} />
+              <div className="article-card">
+                <h2 className="article-title">{t.real_title}</h2>
+                <p className="article-text">{t.real_p1}</p>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem', marginTop: '1.5rem' }}>
+                  <div>
+                    <h4 style={{ color: 'var(--accent-blue)', marginBottom: '0.5rem' }}>{t.real_item1_t}</h4>
+                    <p className="article-text" style={{ fontSize: '0.95rem' }}>{t.real_item1_d}</p>
+                  </div>
+                  <div>
+                    <h4 style={{ color: 'var(--accent-green)', marginBottom: '0.5rem' }}>{t.real_item2_t}</h4>
+                    <p className="article-text" style={{ fontSize: '0.95rem' }}>{t.real_item2_d}</p>
+                  </div>
+                  <div>
+                    <h4 style={{ color: 'var(--accent-purple)', marginBottom: '0.5rem' }}>{t.real_item3_t}</h4>
+                    <p className="article-text" style={{ fontSize: '0.95rem' }}>{t.real_item3_d}</p>
+                  </div>
+                  <div>
+                    <h4 style={{ color: 'var(--accent-red)', marginBottom: '0.5rem' }}>{t.real_item4_t}</h4>
+                    <p className="article-text" style={{ fontSize: '0.95rem' }}>{t.real_item4_d}</p>
+                  </div>
+                </div>
               </div>
 
-              <div className="control-item">
-                <div className="label-row"><span>질량 (m)</span> <span className="val-text">{params.m.toFixed(1)} kg</span></div>
-                <input type="range" min="0.5" max="5" step="0.1" value={params.m} onChange={e => updateParam('m', parseFloat(e.target.value))} />
+              <div className="article-card">
+                <h2 className="article-title">{t.energy_title}</h2>
+                <p className="article-text">{t.energy_p1}</p>
+                <ul>
+                  <li className="article-text"><strong>{t.energy_item1}</strong></li>
+                  <li className="article-text"><strong>{t.energy_item2}</strong></li>
+                </ul>
+                <p className="article-text">{t.energy_p2}</p>
               </div>
+            </section>
 
-              <div className="control-item">
-                <div className="label-row"><span>스프링 상수 (k)</span> <span className="val-text">{params.k} N/m</span></div>
-                <input type="range" min="1" max="50" step="1" value={params.k} onChange={e => updateParam('k', parseFloat(e.target.value))} />
+            <section id="guide" className="content-section app-container" style={{ marginTop: '-2rem' }}>
+              <div className="article-card">
+                <h2 className="article-title">{t.guide_title}</h2>
+                <p className="article-text">{t.guide_p1}</p>
+
+                <div style={{ background: 'rgba(59, 130, 246, 0.1)', borderLeft: '4px solid var(--accent-blue)', padding: '1.5rem', borderRadius: '0 8px 8px 0', marginBottom: '2rem' }}>
+                  <h4 style={{ margin: '0 0 0.5rem 0', color: 'var(--accent-blue)' }}>{t.guide_tip_t}</h4>
+                  <p className="article-text" style={{ margin: 0, fontSize: '0.95rem' }}>{t.guide_tip_d}</p>
+                </div>
+
+                <div style={{ background: 'rgba(59, 130, 246, 0.1)', borderLeft: '4px solid var(--accent-blue)', padding: '1.5rem', borderRadius: '0 8px 8px 0', marginBottom: '2rem' }}>
+                  <h3 style={{ color: 'var(--text-primary)', marginTop: 0 }}>{t.guide_exp1_t}</h3>
+                  <p className="article-text" style={{ marginBottom: '1rem' }}>{t.guide_exp1_p1}</p>
+                  <ol className="article-text">
+                    <li>{t.guide_exp1_s1}</li>
+                    <li>{t.guide_exp1_s2}</li>
+                    <li>{t.guide_exp1_s3}</li>
+                  </ol>
+                </div>
+
+                <div style={{ background: 'rgba(16, 185, 129, 0.1)', borderLeft: '4px solid var(--accent-green)', padding: '1.5rem', borderRadius: '0 8px 8px 0' }}>
+                  <h3 style={{ color: 'var(--text-primary)', marginTop: 0 }}>{t.guide_exp2_t}</h3>
+                  <p className="article-text" style={{ marginBottom: '1rem' }}>{t.guide_exp2_p1}</p>
+                  <ol className="article-text">
+                    <li>{t.guide_exp2_s1}</li>
+                    <li>{t.guide_exp2_s2}</li>
+                  </ol>
+                </div>
               </div>
+            </section>
+          </main>
 
-              <div className="button-group">
-                <button className={`btn ${paused ? 'btn-play' : 'btn-pause'}`} onClick={() => setPaused(!paused)}>
-                  {paused ? "시작" : "일시정지"}
-                </button>
-                <button className="btn btn-reset" onClick={() => { setTime(0); setPaused(true); }}>초기화</button>
+          <footer className="site-footer">
+            <div className="footer-content">
+              <div className="copyright">&copy; 2024 SHM Master. All rights reserved.</div>
+              <div className="footer-links">
+                <a href="/privacy.html">{t.footer_privacy}</a>
+                <a href="/terms.html">{t.footer_terms}</a>
               </div>
             </div>
-
-            <div className="dashboard">
-              <div className="dash-card">
-                <div className="dash-val">{(2 * Math.PI / physics.omega).toFixed(2)}s</div>
-                <div className="dash-lbl">Period (T)</div>
-              </div>
-              <div className="dash-card">
-                <div className="dash-val">{physics.omega.toFixed(2)}</div>
-                <div className="dash-lbl">Freq (ω)</div>
-              </div>
-              <div className="dash-card">
-                <div className="dash-val">{(0.5 * params.k * currentState.x ** 2 + 0.5 * params.m * currentState.v ** 2).toFixed(1)}J</div>
-                <div className="dash-lbl">Energy (E)</div>
-              </div>
-              <div className="dash-card">
-                <div className="dash-val">{physics.A.toFixed(2)}m</div>
-                <div className="dash-lbl">Amplitude (A)</div>
-              </div>
-            </div>
-
-            {/* 제휴 문의 폼 */}
-            <div className="card contact-card">
-              <h3 style={{ margin: '0 0 1rem 0', fontSize: '1rem', color: 'var(--accent-blue)' }}>🤝 제휴 문의</h3>
-              <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', marginBottom: '1rem' }}>
-                시뮬레이션 도입 및 협업 문의는 아래 폼을 통해 남겨주세요.
-              </p>
-              <form action="https://formspree.io/f/xvzzpqdq" method="POST" className="contact-form">
-                <input type="text" name="name" className="form-input" placeholder="성함/기업명" required />
-                <input type="email" name="email" className="form-input" placeholder="이메일 주소" required />
-                <textarea name="message" className="form-textarea" placeholder="문의 내용을 입력해 주세요." required></textarea>
-                <button type="submit" className="btn-submit">문의 보내기</button>
-              </form>
-            </div>
-          </aside>
-        </div>
+          </footer>
+        </React.Fragment>
       );
     };
 
