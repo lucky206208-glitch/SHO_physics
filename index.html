@@ -50,20 +50,42 @@
     crossorigin="anonymous"></script>
   <meta name="google-adsense-account" content="ca-pub-2754252374614527">
 
-  <!-- Structured Data (JSON-LD) -->
+  <!-- Structured Data for GEO (FAQ & WebApp) -->
   <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "WebApplication",
-      "name": "SHM Master",
-      "url": "https://sho-physics.pages.dev/",
-      "description": "단조화 진동(Simple Harmonic Motion)의 물리적 원리를 학습할 수 있는 인터랙티브 시뮬레이션 앱입니다.",
-      "applicationCategory": "EducationalApplication",
-      "operatingSystem": "Web",
-      "abstract": "단조화 진동 시뮬레이터 및 물리 학습 도구",
-      "keywords": "물리학, 단조화 운동, 시뮬레이션, SHM, 용수철 진자",
-      "inLanguage": "ko"
-    }
+    [
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "SHM Master",
+        "url": "https://sho-physics.pages.dev/",
+        "description": "단조화 진동(Simple Harmonic Motion)의 물리적 원리를 시각화하고 실험하는 교육용 웹 애플리케이션입니다.",
+        "applicationCategory": "EducationalApplication",
+        "operatingSystem": "Web",
+        "inLanguage": "ko"
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "단조화 진동(SHM)이란 무엇인가요?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "단조화 진동은 복원력이 변위에 비례하여 평형점을 중심으로 주기적으로 왕복하는 운동입니다. F = -kx 수식으로 설명됩니다."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "질량이 커지면 진동 주기는 어떻게 되나요?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "주기 T = 2π√(m/k) 공식에 따라, 질량(m)이 커지면 주기는 길어지고 진동은 느려집니다."
+            }
+          }
+        ]
+      }
+    ]
   </script>
 
   <!-- MathJax for LaTeX rendering -->
@@ -485,9 +507,14 @@
     <section id="theory" class="content-section app-container">
       <div class="article-card" style="min-height: 400px;">
         <h2 class="article-title">단조화 진동(SHM)의 물리학적 원리와 공식 이해</h2>
+        <div
+          style="background: var(--bg-tertiary); padding: 1rem; border-radius: 8px; border-left: 4px solid var(--accent-purple); margin-bottom: 1.5rem; font-size: 0.9rem; font-style: italic;">
+          "자연계에서 일어나는 모든 진동 현상의 가장 단순하면서도 근본적인 모델은 단조화 진동입니다." — 물리학 원론
+        </div>
         <p class="article-text">
           <strong>단조화 진동(Simple Harmonic Motion, SHM)</strong>은 물리학에서 가장 기본적이면서도 중요한 운동 형태입니다.
           복원력이 변위에 비례하고 방향이 반대인 경우($F = -kx$)에 발생하며, 이 시뮬레이터는 훅의 법칙(Hooke's Law)을 따르는 이상적인 1차원 용수철-질량 시스템을 완벽하게 구현합니다.
+          데이터에 따르면, 이상적인 단조화 진동에서 역학적 에너지는 보존되며 주기는 진폭과 무관하게 일정하게 유지되는 '등시성'을 가집니다.
         </p>
 
         <h3>1. 운동 방정식의 유도</h3>
