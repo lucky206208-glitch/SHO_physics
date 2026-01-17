@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://shm-master.pages.dev/sitemap.xml

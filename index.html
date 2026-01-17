@@ -4,27 +4,29 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
   <link rel="icon" type="image/svg+xml"
     href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><defs><linearGradient id=%22g%22 x1=%220%25%22 y1=%220%25%22 x2=%22100%25%22 y2=%22100%25%22><stop offset=%220%25%22 style=%22stop-color:%233b82f6%22/><stop offset=%22100%25%22 style=%22stop-color:%23a855f7%22/></linearGradient></defs><circle cx=%2250%22 cy=%2250%22 r=%2245%22 fill=%22url(%23g)%22/><path d=%22M25 50 Q37.5 20 50 50 T75 50%22 stroke=%22white%22 stroke-width=%228%22 fill=%22none%22 stroke-linecap=%22round%22/><circle cx=%2275%22 cy=%2250%22 r=%226%22 fill=%22white%22/></svg>">
   <meta name="description"
-    content="단조화 진동(Simple Harmonic Motion)의 원리를 이해하고 직접 실험해보세요. 위치, 속도, 가속도의 관계를 실시간 그래프로 확인할 수 있는 대화형 물리 시뮬레이션입니다.">
-  <meta name="keywords" content="물리학, 단조화 운동, 시뮬레이션, SHM, 용수철 진자, 등속 원운동, 물리 실험, 교육용 자료">
-  <meta property="og:title" content="SHM Master - 단조화 진동 시뮬레이션">
-  <meta property="og:description" content="위치, 속도, 가속도 그래프와 함께하는 인터랙티브 물리 학습 도구">
+    content="단조화 진동(Simple Harmonic Motion)의 물리적 원리를 완벽하게 이해할 수 있는 대화형 물리 시뮬레이션입니다. 주기, 진폭, 질량, 용수철 상수를 직접 조절하며 위치, 속도, 가속도의 관계를 실시간 그래프로 학습하세요. 중고등학교 및 대학교 물리 실험 교구로 최적화되었습니다.">
+  <meta name="keywords"
+    content="물리학, 단조화 진동, Simple Harmonic Motion, SHM, 물리 시뮬레이션, 용수철 진자, 등속 원운동, 물리 실험, 교육용 앱, 주기 계산, 진폭, 진동수">
+  <meta property="og:title" content="SHM Master - 인터랙티브 단조화 진동 물리 시뮬레이션">
+  <meta property="og:description" content="위치, 속도, 가속도 그래프를 통해 단조화 진동의 원리를 직접 실험하고 학습하세요.">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://shm-master.pages.dev/">
-  <meta property="og:image" content="https://shm-master.pages.dev/og-image.png">
+  <meta property="og:url" content="https://sho-physics.pages.dev/">
+  <meta property="og:image" content="https://sho-physics.pages.dev/og-image.png">
 
   <!-- Twitter Cards -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="SHM Master - 단조화 진동 시뮬레이션">
-  <meta name="twitter:description" content="위치, 속도, 가속도 그래프와 함께하는 인터랙티브 물리 학습 도구">
-  <meta name="twitter:image" content="https://shm-master.pages.dev/og-image.png">
+  <meta name="twitter:title" content="SHM Master - 인터랙티브 단조화 진동 물리 시뮬레이션">
+  <meta name="twitter:description" content="물리학 단조화 운동의 핵심 원리를 실시간 그래프와 시뮬레이션으로 마스터하세요.">
+  <meta name="twitter:image" content="https://sho-physics.pages.dev/og-image.png">
 
-  <link rel="canonical" href="https://shm-master.pages.dev/">
+  <link rel="canonical" href="https://sho-physics.pages.dev/">
   <meta name="naver-site-verification" content="YOUR_NAVER_VERIFICATION_KEY">
 
-  <title>SHM Master - 단조화 진동(SHM) 시뮬레이터 및 물리 학습</title>
+  <title>SHM Master - 단조화 진동(SHM) 시뮬레이션 및 물리학 학습 도구</title>
 
   <!-- Google Analytics (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-GGXY4ZLEN7"></script>
@@ -54,8 +56,8 @@
       "@context": "https://schema.org",
       "@type": "WebApplication",
       "name": "SHM Master",
-      "url": "https://shm-master.pages.dev/",
-      "description": "단조화 진동(Simple Harmonic Motion)의 원리를 이해하고 직접 실험해보세요. 위치, 속도, 가속도의 관계를 실시간 그래프로 확인할 수 있는 대화형 물리 시뮬레이션입니다.",
+      "url": "https://sho-physics.pages.dev/",
+      "description": "단조화 진동(Simple Harmonic Motion)의 물리적 원리를 학습할 수 있는 인터랙티브 시뮬레이션 앱입니다.",
       "applicationCategory": "EducationalApplication",
       "operatingSystem": "Web",
       "abstract": "단조화 진동 시뮬레이터 및 물리 학습 도구",
@@ -63,11 +65,6 @@
       "inLanguage": "ko"
     }
   </script>
-
-  <!-- React Dependencies -->
-  <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
   <!-- MathJax for LaTeX rendering -->
   <script>
@@ -79,384 +76,386 @@
     };
   </script>
   <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
 
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
-    :root {
-      --bg-primary: #0a0a0a;
-      --bg-secondary: #171717;
-      --bg-tertiary: #262626;
-      --text-primary: #ededed;
-      --text-secondary: #a3a3a3;
-      --accent-blue: #3b82f6;
-      --accent-green: #10b981;
-      --accent-red: #ef4444;
-      --accent-purple: #a855f7;
-      --grid-color: rgba(255, 255, 255, 0.05);
-    }
+  :root {
+    --bg-primary: #0a0a0a;
+    --bg-secondary: #171717;
+    --bg-tertiary: #262626;
+    --text-primary: #ededed;
+    --text-secondary: #a3a3a3;
+    --accent-blue: #3b82f6;
+    --accent-green: #10b981;
+    --accent-red: #ef4444;
+    --accent-purple: #a855f7;
+    --grid-color: rgba(255, 255, 255, 0.05);
+  }
 
-    body {
-      font-family: 'Inter', sans-serif;
-      background-color: var(--bg-primary);
-      color: var(--text-primary);
-      margin: 0;
-      padding: 0;
-      line-height: 1.6;
-    }
+  body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+  }
 
-    .app-container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 2rem;
-    }
+  .app-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
 
-    /* Header Navigation */
-    .site-header {
-      padding: 1.5rem 0;
-      border-bottom: 1px solid var(--bg-tertiary);
-      margin-bottom: 2rem;
-    }
+  /* Header Navigation */
+  .site-header {
+    padding: 1.5rem 0;
+    border-bottom: 1px solid var(--bg-tertiary);
+    margin-bottom: 2rem;
+  }
 
-    .nav-container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 2rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
+  .nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 
-    .logo {
-      font-size: 1.5rem;
-      font-weight: 800;
-      background: linear-gradient(to right, #3b82f6, #a855f7);
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-      text-decoration: none;
-    }
+  .logo {
+    font-size: 1.5rem;
+    font-weight: 800;
+    background: linear-gradient(to right, #3b82f6, #a855f7);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-decoration: none;
+  }
 
-    .nav-links {
-      display: flex;
-      gap: 2rem;
-    }
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+  }
 
-    .nav-links a {
-      color: var(--text-secondary);
-      text-decoration: none;
-      font-weight: 500;
-      transition: color 0.2s;
-    }
+  .nav-links a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
 
-    .nav-links a:hover {
-      color: var(--text-primary);
-    }
+  .nav-links a:hover {
+    color: var(--text-primary);
+  }
 
-    /* Main Grid Layout */
+  /* Main Grid Layout */
+  .main-layout {
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: 2rem;
+    margin-bottom: 4rem;
+    min-height: 800px;
+  }
+
+  @media (max-width: 1000px) {
     .main-layout {
-      display: grid;
-      grid-template-columns: 1fr 340px;
-      gap: 2rem;
-      margin-bottom: 4rem;
-    }
-
-    @media (max-width: 1000px) {
-      .main-layout {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .card {
-      background: var(--bg-secondary);
-      border: 1px solid var(--bg-tertiary);
-      border-radius: 16px;
-      padding: 1.5rem;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-    }
-
-    /* Simulation Styles */
-    .sim-view {
-      display: flex;
-      flex-direction: column;
-      gap: 1.5rem;
-    }
-
-    canvas.oscillator-canvas {
-      width: 100%;
-      height: 240px;
-      background: rgba(0, 0, 0, 0.3);
-      border-radius: 12px;
-    }
-
-    .graphs-container {
-      display: grid;
       grid-template-columns: 1fr;
-      gap: 1.5rem;
     }
+  }
 
-    canvas.graph-canvas {
-      width: 100%;
-      height: 160px;
-      background: rgba(0, 0, 0, 0.2);
-      border-radius: 8px;
-    }
+  .card {
+    background: var(--bg-secondary);
+    border: 1px solid var(--bg-tertiary);
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  }
 
-    .graph-label {
-      font-size: 0.75rem;
-      font-weight: 600;
-      color: var(--text-secondary);
-      margin-bottom: 0.5rem;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
+  /* Simulation Styles */
+  .sim-view {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
 
-    .dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-    }
+  canvas.oscillator-canvas {
+    width: 100%;
+    height: 240px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 12px;
+  }
 
-    /* Controls */
-    .control-section {
-      display: flex;
-      flex-direction: column;
-      gap: 1.25rem;
-    }
+  .graphs-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
 
-    .control-item {
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-      margin-top: 10px;
-    }
+  canvas.graph-canvas {
+    width: 100%;
+    height: 160px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+  }
 
-    .control-item:first-child {
-      margin-top: 0;
-    }
+  .graph-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
 
-    .label-row {
-      display: flex;
-      justify-content: space-between;
-      font-size: 0.85rem;
-      font-weight: 500;
-    }
+  .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+  }
 
-    .val-text {
-      font-family: monospace;
-      color: var(--accent-blue);
-    }
+  /* Controls */
+  .control-section {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
 
-    input[type="range"] {
-      width: 100%;
-      height: 6px;
-      background: var(--bg-tertiary);
-      border-radius: 3px;
-      outline: none;
-      -webkit-appearance: none;
-      -moz-appearance: none;
-      appearance: none;
-    }
+  .control-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: 10px;
+  }
 
-    input[type="range"]::-webkit-slider-thumb {
-      -webkit-appearance: none;
-      width: 18px;
-      height: 18px;
-      background: #fff;
-      border-radius: 50%;
-      cursor: pointer;
-      box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
-    }
+  .control-item:first-child {
+    margin-top: 0;
+  }
 
-    .button-group {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0.75rem;
-      margin-top: 1rem;
-    }
+  .label-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    font-weight: 500;
+  }
 
-    .btn {
-      padding: 0.8rem;
-      border-radius: 10px;
-      border: none;
-      font-weight: 700;
-      cursor: pointer;
-      transition: transform 0.1s, opacity 0.2s;
-    }
+  .val-text {
+    font-family: monospace;
+    color: var(--accent-blue);
+  }
 
-    .btn:active {
-      transform: scale(0.97);
-    }
+  input[type="range"] {
+    width: 100%;
+    height: 6px;
+    background: var(--bg-tertiary);
+    border-radius: 3px;
+    outline: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+  }
 
-    .btn-play {
-      background: var(--accent-blue);
-      color: white;
-    }
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    background: #fff;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+  }
 
-    .btn-pause {
-      background: #f59e0b;
-      color: white;
-    }
+  .button-group {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    margin-top: 1rem;
+  }
 
-    .btn-reset {
-      background: var(--bg-tertiary);
-      color: white;
-    }
+  .btn {
+    padding: 0.8rem;
+    border-radius: 10px;
+    border: none;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.1s, opacity 0.2s;
+  }
 
-    .dashboard {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 0.75rem;
-      margin-top: 1.5rem;
-    }
+  .btn:active {
+    transform: scale(0.97);
+  }
 
-    .dash-card {
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid var(--bg-tertiary);
-      padding: 1rem;
-      border-radius: 12px;
-      text-align: center;
-    }
+  .btn-play {
+    background: var(--accent-blue);
+    color: white;
+  }
 
-    .dash-val {
-      font-size: 1.2rem;
-      font-weight: 700;
-      font-family: monospace;
-    }
+  .btn-pause {
+    background: #f59e0b;
+    color: white;
+  }
 
-    .dash-lbl {
-      font-size: 0.6rem;
-      color: var(--text-secondary);
-      text-transform: uppercase;
-      margin-top: 0.2rem;
-    }
+  .btn-reset {
+    background: var(--bg-tertiary);
+    color: white;
+  }
 
-    /* Contact Form */
-    .contact-card {
-      margin-top: 1.5rem;
-      border: 1px solid rgba(59, 130, 246, 0.3);
-    }
+  .dashboard {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+  }
 
-    .contact-form {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
+  .dash-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--bg-tertiary);
+    padding: 1rem;
+    border-radius: 12px;
+    text-align: center;
+  }
 
-    .form-input,
-    .form-textarea {
-      background: var(--bg-tertiary);
-      border: 1px solid #404040;
-      border-radius: 8px;
-      padding: 0.75rem;
-      color: #fff;
-      outline: none;
-      transition: border-color 0.2s;
-      width: 100%;
-      box-sizing: border-box;
-    }
+  .dash-val {
+    font-size: 1.2rem;
+    font-weight: 700;
+    font-family: monospace;
+  }
 
-    .form-input:focus,
-    .form-textarea:focus {
-      border-color: var(--accent-blue);
-    }
+  .dash-lbl {
+    font-size: 0.6rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    margin-top: 0.2rem;
+  }
 
-    .form-textarea {
-      resize: vertical;
-      min-height: 80px;
-    }
+  /* Contact Form */
+  .contact-card {
+    margin-top: 1.5rem;
+    border: 1px solid rgba(59, 130, 246, 0.3);
+  }
 
-    .btn-submit {
-      background: linear-gradient(to right, #3b82f6, #a855f7);
-      color: white;
-      padding: 0.75rem;
-      border-radius: 8px;
-      font-weight: 600;
-      border: none;
-      cursor: pointer;
-    }
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
 
-    /* Content Sections for SEO */
-    .content-section {
-      max-width: 800px;
-      margin: 4rem auto;
-      padding-bottom: 4rem;
-    }
+  .form-input,
+  .form-textarea {
+    background: var(--bg-tertiary);
+    border: 1px solid #404040;
+    border-radius: 8px;
+    padding: 0.75rem;
+    color: #fff;
+    outline: none;
+    transition: border-color 0.2s;
+    width: 100%;
+    box-sizing: border-box;
+  }
 
-    .article-card {
-      background: var(--bg-secondary);
-      border-radius: 16px;
-      padding: 2.5rem;
-      margin-bottom: 2rem;
-      border: 1px solid var(--bg-tertiary);
-    }
+  .form-input:focus,
+  .form-textarea:focus {
+    border-color: var(--accent-blue);
+  }
 
-    .article-title {
-      font-size: 1.8rem;
-      margin-bottom: 1.5rem;
-      color: var(--text-primary);
-    }
+  .form-textarea {
+    resize: vertical;
+    min-height: 80px;
+  }
 
-    .article-text {
-      color: var(--text-secondary);
-      line-height: 1.8;
-      margin-bottom: 1.5rem;
-    }
+  .btn-submit {
+    background: linear-gradient(to right, #3b82f6, #a855f7);
+    color: white;
+    padding: 0.75rem;
+    border-radius: 8px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+  }
 
-    .article-text strong {
-      color: var(--text-primary);
-    }
+  /* Content Sections for SEO */
+  .content-section {
+    max-width: 800px;
+    margin: 4rem auto;
+    padding-bottom: 4rem;
+  }
 
-    .math-block {
-      background: var(--bg-tertiary);
-      padding: 1.5rem;
-      border-radius: 8px;
-      margin: 1.5rem 0;
-      text-align: center;
-      font-size: 1.2rem;
-      color: #fff;
-    }
+  .article-card {
+    background: var(--bg-secondary);
+    border-radius: 16px;
+    padding: 2.5rem;
+    margin-bottom: 2rem;
+    border: 1px solid var(--bg-tertiary);
+  }
 
-    /* Footer */
-    .site-footer {
-      background: var(--bg-secondary);
-      border-top: 1px solid var(--bg-tertiary);
-      padding: 3rem 0;
-      margin-top: auto;
-    }
+  .article-title {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    color: var(--text-primary);
+  }
 
-    .footer-content {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 2rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 2rem;
-    }
+  .article-text {
+    color: var(--text-secondary);
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+  }
 
-    .footer-links {
-      display: flex;
-      gap: 1.5rem;
-    }
+  .article-text strong {
+    color: var(--text-primary);
+  }
 
-    .footer-links a {
-      color: var(--text-secondary);
-      text-decoration: none;
-      font-size: 0.9rem;
-    }
+  .math-block {
+    background: var(--bg-tertiary);
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin: 1.5rem 0;
+    text-align: center;
+    font-size: 1.2rem;
+    color: #fff;
+  }
 
-    .footer-links a:hover {
-      text-decoration: underline;
-    }
+  /* Footer */
+  .site-footer {
+    background: var(--bg-secondary);
+    border-top: 1px solid var(--bg-tertiary);
+    padding: 3rem 0;
+    margin-top: auto;
+  }
 
-    .copyright {
-      color: var(--text-secondary);
-      font-size: 0.9rem;
-    }
-  </style>
+  .footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 2rem;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 1.5rem;
+  }
+
+  .footer-links a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 0.9rem;
+  }
+
+  .footer-links a:hover {
+    text-decoration: underline;
+  }
+
+  .copyright {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+  }
+</style>
 </head>
 
 <body>
@@ -475,21 +474,20 @@
   <main>
     <div id="simulation" class="app-container">
       <div class="header">
-        <h1>SHM(단조화 진동) 인터랙티브 물리 실험실</h1>
-        <p style="color: var(--text-secondary); margin-top: 0.5rem;">
-          스프링 상수, 질량, 초기 조건을 조절하여 물체의 운동을 실시간으로 관찰하세요.
+        <h1>SHM Master: 단조화 진동(Simple Harmonic Motion) 인터랙티브 물리 실험실</h1>
+        <p style="color: var(--text-secondary); margin-top: 0.5rem; max-width: 800px;">
+          물리 법칙의 시각화: 스프링 상수, 질량, 초기 위치를 직접 조절하며 단조화 운동의 위치, 속도, 가속도 그래프를 실시간으로 관찰하고 학습하세요.
         </p>
       </div>
       <div id="root"></div>
     </div>
 
     <section id="theory" class="content-section app-container">
-      <div class="article-card">
-        <h2 class="article-title">단조화 진동(SHM)의 물리학적 원리</h2>
+      <div class="article-card" style="min-height: 400px;">
+        <h2 class="article-title">단조화 진동(SHM)의 물리학적 원리와 공식 이해</h2>
         <p class="article-text">
-          단조화 진동(Simple Harmonic Motion, SHM)은 물리학에서 가장 기본적이면서도 중요한 운동 형태입니다.
-          복원력이 변위에 비례하고 방향이 반대인 경우($F \propto -x$), 물체는 평형점을 중심으로 주기적인 왕복 운동을 하게 됩니다.
-          이 시뮬레이터는 훅의 법칙(Hooke's Law)을 따르는 이상적인 1차원 용수철-질량 진동자를 모델링합니다.
+          <strong>단조화 진동(Simple Harmonic Motion, SHM)</strong>은 물리학에서 가장 기본적이면서도 중요한 운동 형태입니다.
+          복원력이 변위에 비례하고 방향이 반대인 경우($F = -kx$)에 발생하며, 이 시뮬레이터는 훅의 법칙(Hooke's Law)을 따르는 이상적인 1차원 용수철-질량 시스템을 완벽하게 구현합니다.
         </p>
 
         <h3>1. 운동 방정식의 유도</h3>
@@ -638,6 +636,12 @@
       </div>
     </div>
   </footer>
+
+
+  <!-- React Dependencies moved to improve PageSpeed -->
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
   <!-- React Logic -->
   <script type="text/babel">
